@@ -242,7 +242,7 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 #timeline-viewer .tv-neighbor.is-peeked .tv-neighbor-title,#timeline-viewer .tv-connected-event.is-peeked strong { text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:4px; }
 body.tv-detail-open { overflow:hidden; }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
+  :root:not([data-theme="light"]):not([data-theme="cute"]) {
   color-scheme:dark;
   --bg:#11151A; --surface:#1A2027; --surface-soft:#11151A; --detail-bg:#202831; --connection-surface:var(--surface);
   --ink:#E8EAED; --muted:#9AA3AE; --line:rgba(255,255,255,.10); --line-strong:#9AA3AE;
@@ -273,6 +273,44 @@ body.tv-detail-open { overflow:hidden; }
   --area-literature:#F2C94C; --area-linguistics:#9CC6FF; --area-philosophy:#E4E8EE;
   --area-math:#33C8D8; --area-science:#6BE08E; --area-pe:#FF8A4C;
 }
+/* 귀엽게(2026-10-15 사용자 결정, 피그마 시안 iDpaMow3fPOI9LOF4Yofci). 밝게와 같은 구조에 색과 모양만 바꿉니다. 왼쪽 색 띠는 쓰지 않습니다. */
+:root[data-theme="cute"] {
+  color-scheme:light;
+  --bg:#FFF7F3; --surface:#FFFFFF; --surface-soft:#FFF0F4; --detail-bg:#FFF3F7; --connection-surface:var(--surface-soft);
+  --ink:#3D2B45; --muted:#7A5670; --line:rgba(176,48,106,.14); --line-strong:#C98AA8;
+  --link:#B0306A; --accent:#B0306A; --selected-bg:#B0306A; --selected-ink:#FFFFFF;
+  --mast-bg:#FFEEF3; --mast-ink:#3D2B45; --mast-muted:#7A5670; --mast-line:rgba(176,48,106,.18);
+  --mast-selected-bg:#B0306A; --mast-selected-ink:#FFFFFF;
+  --focus:#B0306A; --mast-focus:#B0306A; --backdrop:rgba(61,43,69,.45); --clear:transparent;
+  --font-body:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;
+  --font-title:"Jua","IBM Plex Sans KR",system-ui,sans-serif; --font-number:"IBM Plex Mono",ui-monospace,"Consolas",monospace;
+  --control-radius:999px; --card-radius:14px; --control-weight:600;
+  --area-history:#B5764A; --area-art:#E2559A; --area-music:#8C68E6;
+  --area-literature:#B98A00; --area-linguistics:#3A86E6; --area-philosophy:#737E9A;
+  --area-math:#11A0B2; --area-science:#22A464; --area-pe:#EE6A35;
+}
+:root[data-theme="cute"] body { background-image:radial-gradient(circle,#F5D7E3 1.2px,transparent 1.7px); background-size:22px 22px; }
+:root[data-theme="cute"] .tv-masthead { border:1px solid var(--mast-line); border-radius:20px; }
+:root[data-theme="cute"] #timeline-viewer :is(h1,h2,#tv-detail-title,.tv-peek-title,.tv-detail-section > h3,.tv-sources > summary,.tv-daily-label strong) { font-family:var(--font-title); font-weight:400; letter-spacing:0; font-synthesis:none; }
+:root[data-theme="cute"] .tv-card-title { font-family:var(--font-body); }
+:root[data-theme="cute"] #timeline-viewer .tv-card { box-shadow:0 2px 8px color-mix(in srgb,var(--area) 14%,transparent); }
+:root[data-theme="cute"] #timeline-viewer .tv-card:hover,:root[data-theme="cute"] #timeline-viewer .tv-card.is-selected { box-shadow:0 0 0 1px var(--area),0 6px 18px color-mix(in srgb,var(--area) 32%,transparent); }
+:root[data-theme="cute"] #timeline-viewer .tv-card::before { top:4px; left:4px; width:6px; height:6px; border-radius:50%; }
+:root[data-theme="cute"] .tv-period strong { border-radius:12px; background:color-mix(in srgb,var(--selected-bg) 14%,var(--surface)); color:var(--ink); }
+:root[data-theme="cute"] .tv-table thead [data-area-head] > span { border-bottom:0; padding:2px 10px; border-radius:999px; background:color-mix(in srgb,var(--area) 16%,var(--surface-soft)); }
+:root[data-theme="cute"] .tv-detail { border-top-left-radius:20px; box-shadow:-12px 0 32px rgba(176,48,106,.12); }
+:root[data-theme="cute"] .tv-peek { border-color:var(--line); box-shadow:0 14px 36px rgba(176,48,106,.16); }
+:root[data-theme="cute"] #tv-subareas { border-color:var(--line); border-radius:var(--card-radius); box-shadow:0 10px 28px rgba(176,48,106,.14); }
+:root[data-theme="cute"] .tv-meta-chip { background:var(--surface-soft); }
+/* 하루 한 사건: 본문과 옆 칸을 둥근 흰 카드로 */
+:root[data-theme="cute"] .tv-daily-main { padding:28px 30px; background:var(--surface); border:1px solid var(--line); border-radius:24px; box-shadow:0 10px 30px rgba(176,48,106,.08); }
+:root[data-theme="cute"] .tv-daily-side > .tv-detail-section,:root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:16px; padding:20px 22px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:0 6px 20px rgba(176,48,106,.06); }
+:root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:0; }
+/* 상세 칸: 구역마다 흰 카드, 바탕은 연분홍 */
+:root[data-theme="cute"] .tv-detail-content > .tv-detail-section { margin-top:14px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); border-radius:18px; }
+:root[data-theme="cute"] .tv-detail-head { border-bottom-color:var(--line); }
+@media(max-width:780px) { :root[data-theme="cute"] .tv-detail { border-radius:20px 20px 0 0; } }
+
 @media(max-width:1160px) {
   .tv-filters { flex-wrap:wrap; gap:10px; }
   .tv-search-label { min-width:200px; }
@@ -305,7 +343,7 @@ body.tv-detail-open { overflow:hidden; }
 }
 
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&amp;family=IBM+Plex+Sans+KR:wght@400;500;600;700&amp;family=Jua&amp;display=swap">
 </head>
 <body>
 <div id="timeline-viewer" lang="ko">
@@ -318,10 +356,11 @@ body.tv-detail-open { overflow:hidden; }
           <button type="button" data-set-view="table" aria-pressed="false">나란히 보기</button>
           <a class="tv-3d-link" href="graph3d.html">3D로 보기</a>
         </div>
-        <div class="tv-theme-control" role="group" aria-label="화면 밝기">
+        <div class="tv-theme-control" role="group" aria-label="화면 모양">
           <button type="button" data-set-theme="auto" aria-pressed="true">기기에 맞추기</button>
           <button type="button" data-set-theme="light" aria-pressed="false">밝게</button>
           <button type="button" data-set-theme="dark" aria-pressed="false">어둡게</button>
+          <button type="button" data-set-theme="cute" aria-pressed="false">귀엽게</button>
         </div>
       </div>
       <section class="tv-filters" id="tv-filters" aria-label="사건 거르기" hidden>
@@ -358,7 +397,7 @@ body.tv-detail-open { overflow:hidden; }
 (function setupTheme() {
   const buttons = document.querySelectorAll('#timeline-viewer [data-set-theme]');
   const key = 'timeline-v2-theme';
-  const valid = value => ['auto', 'light', 'dark'].includes(value);
+  const valid = value => ['auto', 'light', 'dark', 'cute'].includes(value);
   let saved;
   try { saved = localStorage.getItem(key); } catch {}
   function choose(value, remember = false) {
