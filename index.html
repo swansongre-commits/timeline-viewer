@@ -123,7 +123,7 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 #timeline-viewer .tv-card.is-selected:focus-visible { outline:2px solid var(--focus); outline-offset:3px; }
 #timeline-viewer .tv-card:last-child { margin-bottom:0; }
 .tv-card-top { display:flex; flex-wrap:wrap; align-items:center; gap:4px 5px; font-size:12px; }
-#timeline-viewer .tv-card::before { content:''; position:absolute; top:-1px; left:-1px; width:9px; height:9px; border-radius:var(--card-radius) 0 0 0; background:var(--area); }
+#timeline-viewer .tv-card::before { content:''; position:absolute; top:4px; left:4px; width:6px; height:6px; border-radius:50%; background:var(--area); }
 .tv-year { font-family:var(--font-body); font-size:13px; font-weight:400; font-variant-numeric:tabular-nums; white-space:nowrap; color:var(--muted); }
 .tv-year-note { white-space:nowrap; color:var(--muted); }
 .tv-card-title { display:block; position:relative; margin:5px 0 6px; font-family:var(--font-title); font-size:14px; font-weight:600; line-height:1.55; overflow-wrap:anywhere; }
@@ -295,7 +295,6 @@ body.tv-detail-open { overflow:hidden; }
 :root[data-theme="cute"] .tv-card-title { font-family:var(--font-body); }
 :root[data-theme="cute"] #timeline-viewer .tv-card { box-shadow:0 2px 8px color-mix(in srgb,var(--area) 14%,transparent); }
 :root[data-theme="cute"] #timeline-viewer .tv-card:hover,:root[data-theme="cute"] #timeline-viewer .tv-card.is-selected { box-shadow:0 0 0 1px var(--area),0 6px 18px color-mix(in srgb,var(--area) 32%,transparent); }
-:root[data-theme="cute"] #timeline-viewer .tv-card::before { top:4px; left:4px; width:6px; height:6px; border-radius:50%; }
 :root[data-theme="cute"] .tv-period strong { border-radius:12px; background:color-mix(in srgb,var(--selected-bg) 14%,var(--surface)); color:var(--ink); }
 :root[data-theme="cute"] .tv-table thead [data-area-head] > span { border-bottom:0; padding:2px 10px; border-radius:999px; background:color-mix(in srgb,var(--area) 16%,var(--surface-soft)); }
 :root[data-theme="cute"] .tv-detail { border-top-left-radius:20px; box-shadow:-12px 0 32px rgba(176,48,106,.12); }
