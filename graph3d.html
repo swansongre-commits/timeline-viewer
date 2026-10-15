@@ -6,28 +6,29 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--bg:#ffffff;--surface:#ffffff;--ink:#141414;--muted:#666666;--line:#dddddd;--soft:#f4f4f4;--member:#bbbbbb;--connection:#555555;--area-history:#A76B32;--area-art:#E92976;--area-music:#753CF1;--area-literature:#B88700;--area-linguistics:#1B7AF5;--area-philosophy:#435469;--area-math:#009EB4;--area-science:#0EA454;--area-pe:#F65E06;font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;font-size:13px}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#111111;--surface:#191919;--ink:#eeeeee;--muted:#aaaaaa;--line:#383838;--soft:#242424;--member:#666666;--connection:#b0b0b0;--area-history:#C9A27A;--area-art:#FF7EB0;--area-music:#A070FF;--area-literature:#F2C94C;--area-linguistics:#9CC6FF;--area-philosophy:#E4E8EE;--area-math:#33C8D8;--area-science:#6BE08E;--area-pe:#FF8A4C;}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#111111;--surface:#191919;--ink:#eeeeee;--muted:#aaaaaa;--line:#383838;--soft:#242424;--member:#666666;--connection:#b0b0b0;--area-history:#C9A27A;--area-art:#FF7EB0;--area-music:#A070FF;--area-literature:#F2C94C;--area-linguistics:#9CC6FF;--area-philosophy:#E4E8EE;--area-math:#33C8D8;--area-science:#6BE08E;--area-pe:#FF8A4C;}
+:root{color-scheme:light;--bg:#F1F3F6;--surface:#ffffff;--ink:#111418;--muted:#5A6470;--line:#D5D9DF;--soft:#E8EBEF;--ring:#B3BAC4;--member:#98A1AD;--connection:#B7791F;--dim:#C7CCD3;--area-history:#A76B32;--area-art:#E92976;--area-music:#753CF1;--area-literature:#B88700;--area-linguistics:#1B7AF5;--area-philosophy:#435469;--area-math:#009EB4;--area-science:#0EA454;--area-pe:#F65E06;font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;font-size:13px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,input,select{font:inherit;color:inherit}button,select{background:var(--surface);border:1px solid var(--line);border-radius:6px;min-height:34px;padding:6px 10px;cursor:pointer}button:hover{background:var(--soft)}button[aria-pressed="true"],.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}button:disabled{cursor:wait;opacity:.5}input{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:36px}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ink);outline-offset:2px}button:disabled:hover{background:var(--surface)}[hidden]{display:none!important}
-#graph3d-shell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}.toolbar{z-index:3;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}.brand{margin-right:12px}.brand h1{font-size:19px;font-weight:600;margin:0}.brand p{font-size:11px;color:var(--muted);margin:2px 0 0}.search{position:relative;flex:1;min-width:170px;max-width:400px}.search input{width:100%}.search label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}.results{position:absolute;top:100%;left:0;right:0;max-height:320px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-top:4px;box-shadow:0 5px 15px #00000012}.results button{display:block;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;font-size:12px}.results p{padding:8px 12px}.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tools label{font-size:11px;color:var(--muted)}.filters{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:5px}.filters>span{color:var(--muted);font-size:11px;margin-right:5px}.filters button{min-height:29px;padding:4px 10px;font-size:12px}.workspace{flex:1;min-height:0;position:relative;display:flex}.stage{position:relative;flex:1;min-width:0;overflow:hidden}#graph{width:100%;height:100%;touch-action:none}#graph canvas{display:block}#guides{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden}.time-ring{fill:none;stroke:var(--line);stroke-width:.6;opacity:.55}.axis-pillar{stroke:var(--muted);stroke-width:.7;opacity:.24}.node-label{pointer-events:auto;cursor:pointer;font:11px "IBM Plex Sans KR",sans-serif;fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.node-label.is-axis{font-size:12px;font-weight:600}.node-label.is-dim{opacity:.35}.detail .sources{margin:14px 0}.detail .sources summary{cursor:pointer;font-size:13px;font-weight:600}.detail .sources a{display:block;margin:6px 0;font-size:12px;color:var(--ink);overflow-wrap:anywhere}.tick{font:10px "IBM Plex Sans KR",sans-serif;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.hud{position:absolute;left:14px;bottom:12px;right:14px;pointer-events:none;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:16px}.hud p{margin:2px 0;background:var(--bg);width:fit-content;padding:2px 4px}.legend{align-self:end;text-align:right}.legend span{display:inline-block;border-top:1px solid var(--member);width:20px;vertical-align:middle;margin-right:5px}.legend .strong{border-color:var(--connection)}.notice{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:24px;pointer-events:none}.notice p{max-width:390px;margin:5px auto;font-size:12px;color:var(--muted)}.notice h2{font-size:17px;margin:0 0 8px}.notice.error{background:var(--bg);pointer-events:auto;z-index:2}.notice button{justify-self:center;margin-top:10px}.empty{position:absolute;top:18px;left:50%;transform:translateX(-50%);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:6px;white-space:nowrap;font-size:12px;pointer-events:none}
+#graph3d-shell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}.toolbar{z-index:3;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}.brand{margin-right:12px}.home{display:inline-block;font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;margin-bottom:2px}.home:hover{color:var(--ink)}.brand h1{font-size:19px;font-weight:600;margin:0}.brand p{font-size:11px;color:var(--muted);margin:2px 0 0}.search{position:relative;flex:1;min-width:170px;max-width:400px}.search input{width:100%}.search label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}.results{position:absolute;top:100%;left:0;right:0;max-height:320px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-top:4px;box-shadow:0 5px 15px #00000012}.results button{display:block;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;font-size:12px}.results p{padding:8px 12px}.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tools label{font-size:11px;color:var(--muted)}.filters{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:5px}.filters>span{color:var(--muted);font-size:11px;margin-right:5px}.filters button{min-height:29px;padding:4px 10px;font-size:12px}.workspace{flex:1;min-height:0;position:relative;display:flex}.stage{position:relative;flex:1;min-width:0;overflow:hidden}#graph{width:100%;height:100%;touch-action:none}#graph canvas{display:block}#guides{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden}.time-ring{fill:none;stroke:var(--ring);stroke-width:.8;opacity:.9}.axis-pillar{stroke:var(--muted);stroke-width:.8;opacity:.4}.node-label{pointer-events:auto;cursor:pointer;font:11px "IBM Plex Sans KR",sans-serif;fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.node-label.is-axis{font-size:12px;font-weight:600}.node-label.is-dim{opacity:.35}.detail .sources{margin:14px 0}.detail .sources summary{cursor:pointer;font-size:13px;font-weight:600}.detail .sources a{display:block;margin:6px 0;font-size:12px;color:var(--ink);overflow-wrap:anywhere}.tick{font:10px "IBM Plex Sans KR",sans-serif;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.hud{position:absolute;left:14px;bottom:12px;right:14px;pointer-events:none;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:16px}.hud p{margin:2px 0;background:var(--bg);width:fit-content;padding:2px 4px}.legend{align-self:end;text-align:right}.legend span{display:inline-block;border-top:1px solid var(--member);width:20px;vertical-align:middle;margin-right:5px}.legend .strong{border-color:var(--connection)}.notice{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:24px;pointer-events:none}.notice p{max-width:390px;margin:5px auto;font-size:12px;color:var(--muted)}.notice h2{font-size:17px;margin:0 0 8px}.notice.error{background:var(--bg);pointer-events:auto;z-index:2}.notice button{justify-self:center;margin-top:10px}.empty{position:absolute;top:18px;left:50%;transform:translateX(-50%);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:6px;white-space:nowrap;font-size:12px;pointer-events:none}
 .detail{width:340px;max-width:40vw;flex-shrink:0;border-left:1px solid var(--line);background:var(--surface);overflow:auto;padding:18px 18px 28px}.detail-head{display:flex;align-items:start;justify-content:space-between;gap:12px}.detail h2{font-size:18px;line-height:1.5;margin:8px 0 12px;overflow-wrap:anywhere}.detail h3{font-size:13px;font-weight:600;margin:22px 0 8px}.detail p{font-size:13px;line-height:1.85;margin:8px 0;overflow-wrap:anywhere}.detail .meta{font-size:11px;color:var(--muted);line-height:1.7}.detail .close{min-height:28px;padding:3px 8px}.detail ul{list-style:none;padding:0;margin:0}.detail li{border-top:1px solid var(--line);padding:8px 0}.detail li button{border:0;background:none;text-align:left;width:100%;padding:3px 0;font-size:13px;text-decoration:underline;text-underline-offset:3px}.detail li p{font-size:12px;color:var(--muted);line-height:1.7;margin:3px 0}.detail-placeholder{color:var(--muted);margin-top:24px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 @media(max-width:767px){.toolbar{padding:10px;gap:8px}.brand{margin-right:0;flex-basis:100%}.brand h1{font-size:17px}.brand p{display:none}.search{max-width:none;flex-basis:100%}.tools{width:100%}.tools button{flex:1}.filters{flex-wrap:nowrap;overflow:auto;padding-bottom:3px}.filters button{white-space:nowrap;flex-shrink:0}.filters>span{display:none}.detail{position:absolute;z-index:4;bottom:0;left:0;right:0;width:auto;max-width:none;max-height:46%;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:10px 16px 22px;box-shadow:0 -3px 16px #0000000a}.detail::before{content:"";display:block;width:32px;height:3px;background:var(--line);border-radius:6px;margin:0 auto 8px}.detail h2{font-size:16px;margin:4px 0 8px}.hud{left:8px;bottom:8px;right:8px;font-size:10px}.legend{display:none}.workspace.sheet-open .hud{display:none}.detail p{font-size:12px}.empty{max-width:95%;white-space:normal;width:max-content}}
 </style>
 </head><body>
 <main id="graph3d-shell">
 <header class="toolbar">
-  <div class="brand"><h1>3D 연결 지도</h1><p>사건을 따라, 시간 너머로</p></div>
+  <div class="brand"><a class="home" href="index.html">사건의 지평선으로</a><h1>3D 연결 지도</h1><p>사건을 따라, 시간 너머로</p></div>
   <div class="search" id="search-box"><label for="search-input">사건과 축을 찾아보세요</label><input id="search-input" type="search" placeholder="바로크 음악, 세종, 미적분…" autocomplete="off" aria-controls="search-results" aria-expanded="false" disabled><div id="search-results" class="results" aria-label="검색 결과" hidden></div></div>
   <div class="tools"><button id="show-all" type="button" aria-pressed="false" disabled>전체 보기</button><button id="reset" type="button" disabled>처음으로</button><button id="spin" type="button" aria-pressed="false" disabled>천천히 돌리기</button><label for="theme">화면</label><select id="theme"><option value="auto">자동</option><option value="light">밝게</option><option value="dark">어둡게</option></select></div>
   <div class="filters" id="area-filters" role="group" aria-label="영역 거르기"><span>보고 싶은 영역을 골라보세요</span></div>
+  <div class="filters" id="era-filters" role="group" aria-label="시대 거르기"><span>시대를 골라보세요</span></div>
 </header>
 <div id="workspace" class="workspace">
   <section class="stage" id="stage" aria-label="시간 높이에 따라 놓인 3D 연결 지도">
     <div id="graph" aria-label="끌어서 돌리고, 휠이나 두 손가락으로 확대해 보세요"></div><svg id="guides" aria-hidden="true"></svg>
     <div id="loading" class="notice" role="status"><h2>시간의 지도를 준비하고 있어요</h2><p>축을 누르면 그 안의 사건이 펼쳐져요.</p></div>
     <div id="error" class="notice error" role="alert" hidden><h2>3D 화면을 불러오지 못했어요</h2><p>인터넷 연결과 브라우저의 3D 지원을 확인한 뒤 다시 열어 주세요.</p><button id="retry" type="button">다시 불러오기</button></div>
-    <p id="empty" class="empty" hidden>선택한 영역에 보이는 항목이 없어요. 영역을 고르거나 전체 보기를 눌러 보세요.</p>
+    <p id="empty" class="empty" hidden>선택한 영역과 시대에 보이는 항목이 없어요. 영역이나 시대를 더 골라 보세요.</p>
     <div class="hud"><div><p id="status" role="status" aria-live="polite">지도를 준비하고 있어요</p><p>위로 갈수록 최근이에요. 시간 구간마다 간격이 달라요.</p><p>축을 눌러 펼치고 다시 눌러 접어 보세요. 끌어서 회전하고 확대해 보세요.</p></div><div class="legend"><p><span></span>축에 든 사건</p><p><span class="strong"></span>이어진 사건 · 화살표는 원인과 영향이에요</p></div></div>
   </section>
   <aside id="detail" class="detail" aria-label="선택한 항목 자세히 보기" hidden><div class="detail-head"><span class="meta">연결을 따라가 보세요</span><button id="detail-close" class="close" type="button" aria-label="자세히 보기 닫기">닫기</button></div><div id="detail-content"></div></aside>
@@ -142,7 +143,9 @@ function createGraphModel(data) {
   const memberships = new Map();
   const nodes = new Map();
   const areaIds = [...areas.keys()];
-  const state = { expandedAxes: new Set(), expandedEvents: new Set(), selectedAreas: new Set(areaIds), all: false, selectedId: null };
+  // 시대 거르기(2026-10-15 사용자 요청). 경계는 연도이며 사건은 시작 연도, 축은 걸친 기간으로 판단합니다.
+  const eras = [{ id: 'prehistory', name: '선사', from: -Infinity, to: -3000 }, { id: 'ancient', name: '고대', from: -3000, to: 500 }, { id: 'medieval', name: '중세', from: 500, to: 1500 }, { id: 'earlymodern', name: '근세', from: 1500, to: 1800 }, { id: 'modern', name: '근대', from: 1800, to: 1945 }, { id: 'contemporary', name: '현대', from: 1945, to: Infinity }];
+  const state = { expandedAxes: new Set(), expandedEvents: new Set(), selectedAreas: new Set(areaIds), selectedEras: new Set(eras.map(era => era.id)), all: false, selectedId: null };
   const primary = event => event.areas[0]?.area;
   function position(area, index) {
     const angle = Math.max(0, areaIds.indexOf(area)) / areaIds.length * Math.PI * 2;
@@ -167,7 +170,12 @@ function createGraphModel(data) {
   });
   for (const node of nodes.values()) { node.homeX = node.x; node.homeZ = node.z; }
 
-  const allowed = node => node.kind === 'axis' ? state.selectedAreas.has(node.area) : events.get(node.id).areas.some(area => state.selectedAreas.has(area.area));
+  const inEras = (start, end) => eras.some(era => state.selectedEras.has(era.id) && start < era.to && end >= era.from);
+  const allowedTime = node => {
+    if (node.kind === 'axis') { const axis = axes.get(node.id); return inEras(year(axis.period.start), year(axis.period.end)); }
+    const y = year(events.get(node.id).date.start); return inEras(y, y);
+  };
+  const allowed = node => (node.kind === 'axis' ? state.selectedAreas.has(node.area) : events.get(node.id).areas.some(area => state.selectedAreas.has(area.area))) && allowedTime(node);
   function placeAround(ids, center) {
     ids.forEach((id, i) => {
       const node = nodes.get(id);
@@ -231,7 +239,7 @@ function createGraphModel(data) {
   }
   function reset() {
     state.expandedAxes.clear(); state.expandedEvents.clear();
-    state.selectedAreas = new Set(areaIds); state.all = false; state.selectedId = null;
+    state.selectedAreas = new Set(areaIds); state.selectedEras = new Set(eras.map(era => era.id)); state.all = false; state.selectedId = null;
     for (const node of nodes.values()) {
       node.x = node.homeX; node.z = node.homeZ; node.y = node.fy;
       node.vx = node.vy = node.vz = 0; delete node.fx; delete node.fz;
@@ -242,7 +250,7 @@ function createGraphModel(data) {
     const needle = String(query).trim().toLocaleLowerCase('ko-KR');
     return needle ? [...nodes.values()].filter(node => node.title.toLocaleLowerCase('ko-KR').includes(needle)).slice(0, limit) : [];
   }
-  return { boundaries, step, year, timeZ, yearLabel, areas, events, axes, nodes, memberships, relations, state, snapshot, expand, navigate, reset, search, allowed };
+  return { boundaries, step, year, timeZ, yearLabel, eras, areas, events, axes, nodes, memberships, relations, state, snapshot, expand, navigate, reset, search, allowed };
 }</script>
 <script id="graph3d-app">(function bootGraph3d() {
   'use strict';
@@ -271,7 +279,7 @@ function createGraphModel(data) {
   function colors() {
     const styles = getComputedStyle(root);
     const value = token => styles.getPropertyValue(token).trim();
-    themeColors = { bg: value('--bg'), ink: value('--ink'), member: value('--member'), connection: value('--connection'), areas: {} };
+    themeColors = { bg: value('--bg'), ink: value('--ink'), member: value('--member'), connection: value('--connection'), dim: value('--dim'), areas: {} };
     for (const area of data.areas) themeColors.areas[area.area] = value('--area-' + area.area);
   }
   function setTheme(value) {
@@ -285,13 +293,18 @@ function createGraphModel(data) {
       guideDirty = true;
     }
   }
-  function nodeColor(node) { return themeColors.areas[node.area] || themeColors.ink; }
+  // 무언가를 펼쳤을 때는 펼친 축과 그 안의 사건만 영역 색으로, 나머지 축은 흐린 회색으로 둡니다.
+  function nodeColor(node) {
+    const focus = model.state.expandedAxes.size + model.state.expandedEvents.size > 0;
+    if (focus && node.kind === 'axis' && !node.expanded && node.id !== model.state.selectedId) return themeColors.dim;
+    return themeColors.areas[node.area] || themeColors.ink;
+  }
   function linkColor(link) { return link.kind === 'membership' ? themeColors.member : themeColors.connection; }
   function fail() {
     $('loading').hidden = true; $('error').hidden = false;
     $('status').textContent = '3D 화면을 불러오지 못했어요';
   }
-  let storedTheme = 'auto';
+  let storedTheme = 'dark';
   try { const stored = localStorage.getItem('timeline-graph3d-theme'); if (['auto', 'light', 'dark'].includes(stored)) storedTheme = stored; } catch {}
   setTheme(storedTheme);
   $('theme').addEventListener('change', event => setTheme(event.target.value));
@@ -310,6 +323,17 @@ function createGraphModel(data) {
   }
   function syncFilters() {
     for (const button of $('area-filters').querySelectorAll('button')) button.setAttribute('aria-pressed', String(model.state.selectedAreas.has(button.dataset.area)));
+    for (const button of $('era-filters').querySelectorAll('button')) button.setAttribute('aria-pressed', String(model.state.selectedEras.has(button.dataset.era)));
+  }
+  for (const era of model.eras) {
+    const button = element('button', era.name);
+    button.type = 'button'; button.dataset.era = era.id; button.setAttribute('aria-pressed', 'true');
+    button.addEventListener('click', () => {
+      const selected = model.state.selectedEras;
+      selected.has(era.id) ? selected.delete(era.id) : selected.add(era.id);
+      syncFilters(); update();
+    });
+    $('era-filters').append(button);
   }
   for (const area of data.areas) {
     const button = element('button', area.name);
@@ -354,7 +378,7 @@ function createGraphModel(data) {
     if (!graph) return;
     visible = model.snapshot();
     const keep = new Set(visible.nodes.map(node => node.id));
-    graph.graphData(visible);
+    graph.graphData(visible); graph.nodeColor(nodeColor);
     for (const id of labelObjects.keys()) if (!keep.has(id)) removeLabel(id);
     updateLabels(); syncPillars(); status(); graph.d3ReheatSimulation(); guideDirty = true;
     if (model.state.selectedId && !keep.has(model.state.selectedId)) closeDetail(false);
@@ -575,8 +599,8 @@ function createGraphModel(data) {
         setTimeout(() => { try { graph.resumeAnimation(); } catch {} }, 60);
       });
       graph.backgroundColor(themeColors.bg).nodeId('id').nodeVal(node => node.kind === 'axis' ? 9 : 6)
-        .nodeColor(nodeColor).nodeOpacity(.95).nodeResolution(10).nodeLabel(() => '')
-        .linkColor(linkColor).linkWidth(link => link.kind === 'membership' ? .3 : .65).linkOpacity(.5)
+        .nodeColor(nodeColor).nodeOpacity(1).nodeResolution(14).nodeLabel(() => '')
+        .linkColor(linkColor).linkWidth(link => link.kind === 'membership' ? .5 : 1.2).linkOpacity(.75)
         .linkDirectionalArrowLength(link => link.directed ? 5 : 0).linkDirectionalArrowRelPos(.72)
         .enableNodeDrag(false).warmupTicks(0).cooldownTicks(120).d3AlphaDecay(.035).d3VelocityDecay(.35)
         .onNodeClick(openNode)

@@ -53,6 +53,9 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 .tv-eyebrow { font-size:12px; font-weight:var(--control-weight); letter-spacing:.03em; color:var(--mast-muted); }
 .tv-masthead .tv-note { color:var(--mast-muted); }
 .tv-view-control { display:flex; align-items:center; gap:5px; flex-shrink:0; margin-left:12px; }
+#timeline-viewer .tv-3d-link { display:inline-flex; align-items:center; min-height:36px; padding:7px 12px; margin-left:4px; border:1px solid var(--mast-ink); border-radius:var(--control-radius); color:var(--mast-ink); background:var(--clear); font-size:13px; font-weight:var(--control-weight); text-decoration:none; white-space:nowrap; }
+#timeline-viewer .tv-3d-link:hover { background:var(--mast-ink); color:var(--mast-bg); }
+#timeline-viewer .tv-3d-link:focus-visible { outline:2px solid var(--mast-focus); outline-offset:2px; }
 .tv-theme-control { display:flex; align-items:center; gap:5px; flex-shrink:0; margin-left:auto; }
 #timeline-viewer .tv-theme-control button { font-size:12px; min-height:32px; padding:5px 8px; white-space:nowrap; }
 #timeline-viewer .tv-masthead button,#timeline-viewer .tv-masthead input { color:var(--mast-ink); background:var(--clear); border-color:var(--mast-line); }
@@ -308,6 +311,7 @@ body.tv-detail-open { overflow:hidden; }
         <div class="tv-view-control" role="group" aria-label="보기 방식">
           <button type="button" data-set-view="daily" aria-pressed="true">하루 한 사건</button>
           <button type="button" data-set-view="table" aria-pressed="false">나란히 보기</button>
+          <a class="tv-3d-link" href="graph3d.html">3D로 보기</a>
         </div>
         <div class="tv-theme-control" role="group" aria-label="화면 밝기">
           <button type="button" data-set-theme="auto" aria-pressed="true">기기에 맞추기</button>
