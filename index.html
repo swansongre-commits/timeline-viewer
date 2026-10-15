@@ -871,7 +871,7 @@ body.tv-detail-open { overflow:hidden; }
   });
   setupFilters(); renderOverview(); refresh();
   root.querySelectorAll('[data-set-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.setView)));
-  setView('daily');
+  setView(location.hash === '#table' ? 'table' : 'daily');
   const tableScroll = $('tv-table-scroll'), headScroll = $('tv-head-scroll');
   tableScroll.addEventListener('scroll', () => { headScroll.scrollLeft = tableScroll.scrollLeft; }, { passive: true });
   window.addEventListener('resize', () => { headScroll.scrollLeft = tableScroll.scrollLeft; });

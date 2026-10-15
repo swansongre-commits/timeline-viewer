@@ -6,20 +6,27 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:light;--bg:#F1F3F6;--surface:#ffffff;--ink:#111418;--muted:#5A6470;--line:#D5D9DF;--soft:#E8EBEF;--ring:#B3BAC4;--member:#98A1AD;--connection:#B7791F;--dim:#C7CCD3;--area-history:#A76B32;--area-art:#E92976;--area-music:#753CF1;--area-literature:#B88700;--area-linguistics:#1B7AF5;--area-philosophy:#435469;--area-math:#009EB4;--area-science:#0EA454;--area-pe:#F65E06;font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;font-size:13px}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}
+:root{color-scheme:light;--mast-bg:#F6F7F9;--mast-ink:#11151A;--mast-muted:#5A6470;--mast-line:rgba(17,21,26,.10);--mast-sel-bg:#11151A;--mast-sel-ink:#FFF3D3;--bg:#F1F3F6;--surface:#ffffff;--ink:#111418;--muted:#5A6470;--line:#D5D9DF;--soft:#E8EBEF;--ring:#B3BAC4;--member:#98A1AD;--connection:#B7791F;--dim:#C7CCD3;--area-history:#A76B32;--area-art:#E92976;--area-music:#753CF1;--area-literature:#B88700;--area-linguistics:#1B7AF5;--area-philosophy:#435469;--area-math:#009EB4;--area-science:#0EA454;--area-pe:#F65E06;font-family:"IBM Plex Sans KR",system-ui,-apple-system,"Segoe UI","Malgun Gothic",sans-serif;font-size:13px}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--mast-bg:#11151A;--mast-ink:#E8EAED;--mast-muted:#9AA3AE;--mast-line:rgba(255,255,255,.10);--mast-sel-bg:#FFF3D3;--mast-sel-ink:#11151A;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}}
+:root[data-theme="dark"]{color-scheme:dark;--mast-bg:#11151A;--mast-ink:#E8EAED;--mast-muted:#9AA3AE;--mast-line:rgba(255,255,255,.10);--mast-sel-bg:#FFF3D3;--mast-sel-ink:#11151A;--bg:#0B0E13;--surface:#151A22;--ink:#F1F3F5;--muted:#9AA4B2;--line:#2A313C;--soft:#1D232D;--ring:#3A4352;--member:#4D5869;--connection:#F2B84B;--dim:#323A47;--area-history:#E0A458;--area-art:#FF6FA8;--area-music:#A57CFF;--area-literature:#F5D04C;--area-linguistics:#5FA8FF;--area-philosophy:#8FA3BF;--area-math:#2ED3E6;--area-science:#4FE08A;--area-pe:#FF8A3D;}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink)}button,input,select{font:inherit;color:inherit}button,select{background:var(--surface);border:1px solid var(--line);border-radius:6px;min-height:34px;padding:6px 10px;cursor:pointer}button:hover{background:var(--soft)}button[aria-pressed="true"],.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}button:disabled{cursor:wait;opacity:.5}input{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:36px}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ink);outline-offset:2px}button:disabled:hover{background:var(--surface)}[hidden]{display:none!important}
-#graph3d-shell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}.toolbar{z-index:3;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}.brand{margin-right:12px}.home{display:inline-block;font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;margin-bottom:2px}.home:hover{color:var(--ink)}.brand h1{font-size:19px;font-weight:600;margin:0}.brand p{font-size:11px;color:var(--muted);margin:2px 0 0}.search{position:relative;flex:1;min-width:170px;max-width:400px}.search input{width:100%}.search label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}.results{position:absolute;top:100%;left:0;right:0;max-height:320px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-top:4px;box-shadow:0 5px 15px #00000012}.results button{display:block;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;font-size:12px}.results p{padding:8px 12px}.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tools label{font-size:11px;color:var(--muted)}.filters{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:5px}.filters>span{color:var(--muted);font-size:11px;margin-right:5px}.filters button{min-height:29px;padding:4px 10px;font-size:12px}.workspace{flex:1;min-height:0;position:relative;display:flex}.stage{position:relative;flex:1;min-width:0;overflow:hidden}#graph{width:100%;height:100%;touch-action:none}#graph canvas{display:block}#guides{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden}.time-ring{fill:none;stroke:var(--ring);stroke-width:.8;opacity:.9}.axis-pillar{stroke:var(--muted);stroke-width:.8;opacity:.4}.node-label{pointer-events:auto;cursor:pointer;font:11px "IBM Plex Sans KR",sans-serif;fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.node-label.is-axis{font-size:12px;font-weight:600}.node-label.is-dim{opacity:.35}.detail .sources{margin:14px 0}.detail .sources summary{cursor:pointer;font-size:13px;font-weight:600}.detail .sources a{display:block;margin:6px 0;font-size:12px;color:var(--ink);overflow-wrap:anywhere}.tick{font:10px "IBM Plex Sans KR",sans-serif;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.hud{position:absolute;left:14px;bottom:12px;right:14px;pointer-events:none;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:16px}.hud p{margin:2px 0;background:var(--bg);width:fit-content;padding:2px 4px}.legend{align-self:end;text-align:right}.legend span{display:inline-block;border-top:1px solid var(--member);width:20px;vertical-align:middle;margin-right:5px}.legend .strong{border-color:var(--connection)}.notice{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:24px;pointer-events:none}.notice p{max-width:390px;margin:5px auto;font-size:12px;color:var(--muted)}.notice h2{font-size:17px;margin:0 0 8px}.notice.error{background:var(--bg);pointer-events:auto;z-index:2}.notice button{justify-self:center;margin-top:10px}.empty{position:absolute;top:18px;left:50%;transform:translateX(-50%);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:6px;white-space:nowrap;font-size:12px;pointer-events:none}
+#graph3d-shell{height:100vh;height:100dvh;display:flex;flex-direction:column;overflow:hidden}.masthead{z-index:3;color:var(--mast-ink);background:var(--mast-bg);padding:16px 20px;border-bottom:1px solid var(--mast-line)}.mast-top{display:flex;align-items:center;justify-content:space-between;gap:16px}.eyebrow{font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--mast-muted)}.mast-brand h1{margin:0;font:700 25px/1.4 "IBM Plex Sans KR",system-ui,sans-serif;letter-spacing:-.035em}.view-control{display:flex;align-items:center;gap:5px;flex-shrink:0;margin-left:12px}.view-link{display:inline-flex;align-items:center;min-height:36px;padding:7px 10px;border:1px solid var(--mast-line);border-radius:6px;color:var(--mast-ink);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap}a.view-link:hover{border-color:var(--mast-ink)}.view-link.is-current{border-color:var(--mast-ink)}.theme-control{display:flex;align-items:center;gap:5px;flex-shrink:0;margin-left:auto}.masthead button{font-size:12px;min-height:32px;padding:5px 8px;white-space:nowrap;color:var(--mast-ink);background:transparent;border:1px solid var(--mast-line);border-radius:6px;font-weight:600}.masthead button:hover{background:transparent;border-color:var(--mast-ink)}.masthead button[aria-pressed="true"]{color:var(--mast-sel-ink);background:var(--mast-sel-bg);border-color:var(--mast-sel-bg)}.masthead a:focus-visible,.masthead button:focus-visible{outline:2px solid var(--mast-ink);outline-offset:2px}.brand h2{font-size:15px;font-weight:700;margin:0}.toolbar{z-index:3;background:var(--surface);border-bottom:1px solid var(--line);padding:14px 18px 10px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}.brand{margin-right:12px}.home{display:inline-block;font-size:11px;color:var(--muted);text-decoration:underline;text-underline-offset:3px;margin-bottom:2px}.home:hover{color:var(--ink)}.brand h1{font-size:19px;font-weight:600;margin:0}.brand p{font-size:11px;color:var(--muted);margin:2px 0 0}.search{position:relative;flex:1;min-width:170px;max-width:400px}.search input{width:100%}.search label{display:block;font-size:11px;color:var(--muted);margin-bottom:3px}.results{position:absolute;top:100%;left:0;right:0;max-height:320px;overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:6px;margin-top:4px;box-shadow:0 5px 15px #00000012}.results button{display:block;width:100%;border:0;border-bottom:1px solid var(--line);border-radius:0;text-align:left;font-size:12px}.results p{padding:8px 12px}.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.tools label{font-size:11px;color:var(--muted)}.filters{flex-basis:100%;display:flex;flex-wrap:wrap;align-items:center;gap:5px}.filters>span{color:var(--muted);font-size:11px;margin-right:5px}.filters button{min-height:29px;padding:4px 10px;font-size:12px}.workspace{flex:1;min-height:0;position:relative;display:flex}.stage{position:relative;flex:1;min-width:0;overflow:hidden}#graph{width:100%;height:100%;touch-action:none}#graph canvas{display:block}#guides{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:hidden}.time-ring{fill:none;stroke:var(--ring);stroke-width:.8;opacity:.9}.era-ring{fill:none;stroke:var(--muted);stroke-width:1.1;stroke-dasharray:5 5;opacity:.75}.era-bracket{fill:none;stroke:var(--muted);stroke-width:1.2;opacity:.85}.era-label{font:600 14px "IBM Plex Sans KR",sans-serif;fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:4;stroke-linejoin:round}.era-range{font-size:10px;font-weight:400;fill:var(--muted)}.era-ring.is-off,.era-bracket.is-off,.era-label.is-off{opacity:.2}.axis-pillar{stroke:var(--muted);stroke-width:.8;opacity:.4}.node-label{pointer-events:auto;cursor:pointer;font:11px "IBM Plex Sans KR",sans-serif;fill:var(--ink);text-anchor:middle;paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.node-label.is-axis{font-size:12px;font-weight:600}.node-label.is-dim{opacity:.35}.detail .sources{margin:14px 0}.detail .sources summary{cursor:pointer;font-size:13px;font-weight:600}.detail .sources a{display:block;margin:6px 0;font-size:12px;color:var(--ink);overflow-wrap:anywhere}.tick{font:10px "IBM Plex Sans KR",sans-serif;fill:var(--muted);paint-order:stroke;stroke:var(--bg);stroke-width:3;stroke-linejoin:round}.hud{position:absolute;left:14px;bottom:12px;right:14px;pointer-events:none;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:16px}.hud p{margin:2px 0;background:var(--bg);width:fit-content;padding:2px 4px}.legend{align-self:end;text-align:right}.legend span{display:inline-block;border-top:1px solid var(--member);width:20px;vertical-align:middle;margin-right:5px}.legend .strong{border-color:var(--connection)}.notice{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:24px;pointer-events:none}.notice p{max-width:390px;margin:5px auto;font-size:12px;color:var(--muted)}.notice h2{font-size:17px;margin:0 0 8px}.notice.error{background:var(--bg);pointer-events:auto;z-index:2}.notice button{justify-self:center;margin-top:10px}.empty{position:absolute;top:18px;left:50%;transform:translateX(-50%);padding:8px 12px;border:1px solid var(--line);background:var(--surface);border-radius:6px;white-space:nowrap;font-size:12px;pointer-events:none}
 .detail{width:340px;max-width:40vw;flex-shrink:0;border-left:1px solid var(--line);background:var(--surface);overflow:auto;padding:18px 18px 28px}.detail-head{display:flex;align-items:start;justify-content:space-between;gap:12px}.detail h2{font-size:18px;line-height:1.5;margin:8px 0 12px;overflow-wrap:anywhere}.detail h3{font-size:13px;font-weight:600;margin:22px 0 8px}.detail p{font-size:13px;line-height:1.85;margin:8px 0;overflow-wrap:anywhere}.detail .meta{font-size:11px;color:var(--muted);line-height:1.7}.detail .close{min-height:28px;padding:3px 8px}.detail ul{list-style:none;padding:0;margin:0}.detail li{border-top:1px solid var(--line);padding:8px 0}.detail li button{border:0;background:none;text-align:left;width:100%;padding:3px 0;font-size:13px;text-decoration:underline;text-underline-offset:3px}.detail li p{font-size:12px;color:var(--muted);line-height:1.7;margin:3px 0}.detail-placeholder{color:var(--muted);margin-top:24px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-@media(max-width:767px){.toolbar{padding:10px;gap:8px}.brand{margin-right:0;flex-basis:100%}.brand h1{font-size:17px}.brand p{display:none}.search{max-width:none;flex-basis:100%}.tools{width:100%}.tools button{flex:1}.filters{flex-wrap:nowrap;overflow:auto;padding-bottom:3px}.filters button{white-space:nowrap;flex-shrink:0}.filters>span{display:none}.detail{position:absolute;z-index:4;bottom:0;left:0;right:0;width:auto;max-width:none;max-height:46%;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:10px 16px 22px;box-shadow:0 -3px 16px #0000000a}.detail::before{content:"";display:block;width:32px;height:3px;background:var(--line);border-radius:6px;margin:0 auto 8px}.detail h2{font-size:16px;margin:4px 0 8px}.hud{left:8px;bottom:8px;right:8px;font-size:10px}.legend{display:none}.workspace.sheet-open .hud{display:none}.detail p{font-size:12px}.empty{max-width:95%;white-space:normal;width:max-content}}
+@media(max-width:767px){.masthead{padding:16px}.mast-top{flex-wrap:wrap;gap:12px}.view-control{margin-left:0}.theme-control{width:100%;justify-content:flex-end}.toolbar{padding:10px;gap:8px}.brand{margin-right:0;flex-basis:100%}.brand h1{font-size:17px}.brand p{display:none}.search{max-width:none;flex-basis:100%}.tools{width:100%}.tools button{flex:1}.filters{flex-wrap:nowrap;overflow:auto;padding-bottom:3px}.filters button{white-space:nowrap;flex-shrink:0}.filters>span{display:none}.detail{position:absolute;z-index:4;bottom:0;left:0;right:0;width:auto;max-width:none;max-height:46%;border:1px solid var(--line);border-bottom:0;border-radius:12px 12px 0 0;padding:10px 16px 22px;box-shadow:0 -3px 16px #0000000a}.detail::before{content:"";display:block;width:32px;height:3px;background:var(--line);border-radius:6px;margin:0 auto 8px}.detail h2{font-size:16px;margin:4px 0 8px}.hud{left:8px;bottom:8px;right:8px;font-size:10px}.legend{display:none}.workspace.sheet-open .hud{display:none}.detail p{font-size:12px}.empty{max-width:95%;white-space:normal;width:max-content}}
 </style>
 </head><body>
 <main id="graph3d-shell">
+<header class="masthead">
+  <div class="mast-top">
+    <div class="mast-brand"><div class="eyebrow">같은 때, 다른 세계</div><h1>사건의 지평선</h1></div>
+    <nav class="view-control" aria-label="보기 방식"><a class="view-link" href="index.html">하루 한 사건</a><a class="view-link" href="index.html#table">나란히 보기</a><span class="view-link is-current" aria-current="page">3D로 보기</span></nav>
+    <div class="theme-control" role="group" aria-label="화면 밝기"><button type="button" data-set-theme="auto" aria-pressed="false">기기에 맞추기</button><button type="button" data-set-theme="light" aria-pressed="false">밝게</button><button type="button" data-set-theme="dark" aria-pressed="false">어둡게</button></div>
+  </div>
+</header>
 <header class="toolbar">
-  <div class="brand"><a class="home" href="index.html">사건의 지평선으로</a><h1>3D 연결 지도</h1><p>사건을 따라, 시간 너머로</p></div>
+  <div class="brand"><h2>3D 연결 지도</h2><p>축을 누르면 사건이 펼쳐져요</p></div>
   <div class="search" id="search-box"><label for="search-input">사건과 축을 찾아보세요</label><input id="search-input" type="search" placeholder="바로크 음악, 세종, 미적분…" autocomplete="off" aria-controls="search-results" aria-expanded="false" disabled><div id="search-results" class="results" aria-label="검색 결과" hidden></div></div>
-  <div class="tools"><button id="show-all" type="button" aria-pressed="false" disabled>전체 보기</button><button id="reset" type="button" disabled>처음으로</button><button id="spin" type="button" aria-pressed="false" disabled>천천히 돌리기</button><label for="theme">화면</label><select id="theme"><option value="auto">자동</option><option value="light">밝게</option><option value="dark">어둡게</option></select></div>
+  <div class="tools"><button id="show-all" type="button" aria-pressed="false" disabled>전체 보기</button><button id="reset" type="button" disabled>처음으로</button><button id="spin" type="button" aria-pressed="false" disabled>천천히 돌리기</button></div>
   <div class="filters" id="area-filters" role="group" aria-label="영역 거르기"><span>보고 싶은 영역을 골라보세요</span></div>
   <div class="filters" id="era-filters" role="group" aria-label="시대 거르기"><span>시대를 골라보세요</span></div>
 </header>
@@ -261,7 +268,7 @@ function createGraphModel(data) {
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
   let graph = null, visible = { nodes: [], links: [] }, hovered = null, disposed = false;
-  let labelObjects = new Map(), themeColors = {}, guideNodes = [], pillarNodes = new Map();
+  let labelObjects = new Map(), themeColors = {}, guideNodes = [], eraNodes = [], pillarNodes = new Map();
   let lastFrame = 0, guideDirty = true, searchIndex = -1, searchMatches = [], lastTrigger = null;
   let fitPending = true, fitTimer = null;
   const svgNS = 'http://www.w3.org/2000/svg';
@@ -282,10 +289,12 @@ function createGraphModel(data) {
     themeColors = { bg: value('--bg'), ink: value('--ink'), member: value('--member'), connection: value('--connection'), dim: value('--dim'), areas: {} };
     for (const area of data.areas) themeColors.areas[area.area] = value('--area-' + area.area);
   }
+  let currentTheme = 'dark';
   function setTheme(value) {
     if (value === 'auto') delete root.dataset.theme;
     else root.dataset.theme = value;
-    $('theme').value = value;
+    for (const button of document.querySelectorAll('[data-set-theme]')) button.setAttribute('aria-pressed', String(button.dataset.setTheme === value));
+    currentTheme = value;
     try { localStorage.setItem('timeline-graph3d-theme', value); } catch {}
     colors();
     if (graph) {
@@ -307,8 +316,8 @@ function createGraphModel(data) {
   let storedTheme = 'dark';
   try { const stored = localStorage.getItem('timeline-graph3d-theme'); if (['auto', 'light', 'dark'].includes(stored)) storedTheme = stored; } catch {}
   setTheme(storedTheme);
-  $('theme').addEventListener('change', event => setTheme(event.target.value));
-  colorScheme.addEventListener('change', () => { if ($('theme').value === 'auto') setTheme('auto'); });
+  for (const button of document.querySelectorAll('[data-set-theme]')) button.addEventListener('click', () => setTheme(button.dataset.setTheme));
+  colorScheme.addEventListener('change', () => { if (currentTheme === 'auto') setTheme('auto'); });
   $('retry').addEventListener('click', () => location.reload());
   function loadLibrary(url, globalName) {
     return new Promise((resolve, reject) => {
@@ -528,7 +537,31 @@ function createGraphModel(data) {
       const path = svg('path', 'time-ring'), text = svg('text', 'tick'); text.textContent = model.yearLabel(year);
       return { y: model.timeZ(year), path, text };
     });
+    // 시대 구간(2026-10-15 사용자 요청): 경계는 점선 고리, 오른쪽에 괄호선과 시대 이름. 필터에서 뺀 시대는 흐리게.
+    const first = model.boundaries[0], last = model.boundaries[model.boundaries.length - 1];
+    const range = era => era.from === -Infinity ? '~' + model.yearLabel(era.to) : era.to === Infinity ? model.yearLabel(era.from) + '~' : model.yearLabel(era.from).replace(/년$/, '') + '~' + model.yearLabel(era.to);
+    eraNodes = model.eras.map(era => {
+      const low = model.timeZ(Math.max(era.from, first)), high = model.timeZ(Math.min(era.to, last));
+      const ring = era.from === -Infinity ? null : svg('path', 'era-ring');
+      const bracket = svg('path', 'era-bracket'), text = svg('text', 'era-label');
+      const name = document.createElementNS(svgNS, 'tspan'); name.textContent = era.name;
+      const span = document.createElementNS(svgNS, 'tspan'); span.setAttribute('class', 'era-range'); span.setAttribute('dx', '6'); span.textContent = range(era);
+      text.append(name, span);
+      return { era, low, high, mid: (low + high) / 2, ring, bracket, text };
+    });
   }
+  function ringOf(y) {
+    let d = '', pen = false, right = null;
+    for (let i = 0; i <= 64; i++) {
+      const angle = i / 64 * Math.PI * 2;
+      const p = projectPoint(Math.cos(angle) * 560, y, Math.sin(angle) * 560);
+      if (!p) { pen = false; continue; }
+      d += (pen ? 'L' : 'M') + p.x.toFixed(1) + ',' + p.y.toFixed(1); pen = true;
+      if (!right || p.x > right.x) right = p;
+    }
+    return { d, right };
+  }
+  let projectPoint = () => null;
   function drawGuides() {
     if (!graph) return;
     const camera = graph.camera(); const direction = camera.getWorldDirection(camera.position.clone());
@@ -536,6 +569,21 @@ function createGraphModel(data) {
       if ((x - camera.position.x) * direction.x + (y - camera.position.y) * direction.y + (z - camera.position.z) * direction.z <= camera.near) return null;
       const point = graph.graph2ScreenCoords(x, y, z);
       return Number.isFinite(point.x) && Number.isFinite(point.y) ? point : null;
+    }
+    projectPoint = project;
+    for (const node of eraNodes) {
+      const off = !model.state.selectedEras.has(node.era.id);
+      const low = ringOf(node.low), high = ringOf(node.high), mid = ringOf(node.mid);
+      if (node.ring) node.ring.setAttribute('d', low.d);
+      const ok = low.right && high.right && mid.right;
+      node.bracket.style.display = node.text.style.display = ok ? '' : 'none';
+      if (ok) {
+        // 이름표가 화면 밖으로 나가지 않게 오른쪽 끝에서 안쪽으로 붙입니다.
+        const x = Math.min(Math.max(low.right.x, high.right.x, mid.right.x) + 14, stage.clientWidth - 150);
+        node.bracket.setAttribute('d', 'M' + (x - 6) + ',' + (low.right.y - 2) + 'L' + x + ',' + (low.right.y - 2) + 'L' + x + ',' + (high.right.y + 2) + 'L' + (x - 6) + ',' + (high.right.y + 2));
+        node.text.setAttribute('x', x + 8); node.text.setAttribute('y', mid.right.y + 4);
+      }
+      for (const el of [node.ring, node.bracket, node.text]) el?.classList.toggle('is-off', off);
     }
     for (const guide of guideNodes) {
       let d = '', pen = false;
@@ -578,8 +626,14 @@ function createGraphModel(data) {
       if (start && end) { line.setAttribute('x1', start.x); line.setAttribute('y1', start.y); line.setAttribute('x2', end.x); line.setAttribute('y2', end.y); }
     }
   }
+  let lastCameraKey = '';
   function frame(now) {
     if (disposed) return;
+    const camera = graph?.camera();
+    if (camera) {
+      const key = [camera.position.x, camera.position.y, camera.position.z, camera.quaternion.x, camera.quaternion.y, camera.quaternion.z].map(v => v.toFixed(3)).join(',');
+      if (key !== lastCameraKey) { lastCameraKey = key; guideDirty = true; }
+    }
     if (guideDirty && now - lastFrame > 32) { drawGuides(); guideDirty = false; lastFrame = now; }
     requestAnimationFrame(frame);
   }
