@@ -171,6 +171,13 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 #timeline-viewer .tv-original-title { margin:10px 0 0; font-size:13px; font-weight:400; line-height:1.6; color:var(--muted); overflow-wrap:anywhere; }
 #timeline-viewer .tv-summary { margin:20px 0 0; max-width:62ch; font-size:16px; font-weight:500; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
 .tv-detail-section { margin-top:36px; padding-top:24px; border-top:1px solid var(--line); }
+.tv-rel { min-width:0; margin-top:36px; }
+.tv-daily-side > .tv-rel:first-child { margin-top:0; }
+.tv-rel-tabs { display:flex; gap:2px; overflow-x:auto; border-bottom:1px solid var(--line); scrollbar-width:none; }
+#timeline-viewer .tv-rel-tab { flex-shrink:0; min-height:40px; margin-bottom:-1px; padding:8px 12px; font-size:14px; font-weight:500; white-space:nowrap; color:var(--muted); background:var(--clear); border:0; border-bottom:2px solid var(--clear); border-radius:0; }
+#timeline-viewer .tv-rel-tab:hover { color:var(--ink); }
+#timeline-viewer .tv-rel-tab[aria-selected="true"] { font-weight:700; color:var(--ink); border-bottom-color:var(--ink); }
+.tv-rel-panel > .tv-detail-section { margin-top:16px; padding-top:0; border-top:0; }
 #timeline-viewer .tv-detail-section > h3 { margin:0 0 12px; font-size:18px; font-weight:700; line-height:1.4; letter-spacing:-.01em; color:var(--ink); }
 #timeline-viewer .tv-detail-section > h3 + .tv-note { margin:-6px 0 16px; font-size:13px; line-height:1.6; }
 .tv-prose { max-width:62ch; font-size:14px; font-weight:400; line-height:1.8; white-space:pre-wrap; overflow-wrap:anywhere; }
@@ -329,6 +336,10 @@ body.tv-detail-open { overflow:hidden; }
 :root[data-theme="cute"] .tv-daily-side > .tv-detail-section,:root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:16px; padding:20px 22px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:0 6px 20px rgba(176,48,106,.06); }
 :root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:0; }
 /* 상세 칸: 구역마다 흰 카드, 바탕은 연분홍 */
+:root[data-theme="cute"] .tv-rel-tabs { gap:6px; padding-bottom:8px; border-bottom:0; }
+:root[data-theme="cute"] #timeline-viewer .tv-rel-tab { min-height:36px; margin:0; padding:6px 14px; border:1px solid var(--line); border-radius:999px; background:var(--surface); }
+:root[data-theme="cute"] #timeline-viewer .tv-rel-tab[aria-selected="true"] { color:var(--selected-ink); background:var(--selected-bg); border-color:var(--selected-bg); }
+:root[data-theme="cute"] .tv-rel-panel > .tv-detail-section { margin-top:8px; padding:20px 22px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:0 6px 20px rgba(176,48,106,.06); }
 :root[data-theme="cute"] .tv-detail-content > .tv-detail-section { margin-top:14px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); border-radius:18px; }
 :root[data-theme="cute"] .tv-detail-head { border-bottom-color:var(--line); }
 @media(max-width:780px) { :root[data-theme="cute"] .tv-detail { border-radius:20px 20px 0 0; } }
@@ -783,6 +794,39 @@ body.tv-detail-open { overflow:hidden; }
     near.append(list);
     return near;
   }
+  // 이 사건이 놓인 축, 같은 무렵, 이어진 사건은 뜻이 달라 탭으로 나눕니다(2026-10-16 사용자 결정).
+  // 축 목록이 길어 같은 무렵이 화면 아래로 밀리던 문제도 함께 풉니다. 고른 탭은 다음 사건에도 이어집니다.
+  let tabSerial = 0;
+  function relatedTabs(event) {
+    const panes = [['axis', '이 사건이 놓인 축', axisSection(event)], ['near', '같은 무렵', nearSection(event)], ['connected', '이어진 사건', connectedSection(event)]].filter(pane => pane[2]);
+    const box = el('div', 'tv-rel'), list = el('div', 'tv-rel-tabs'), serial = ++tabSerial, tabs = [];
+    list.setAttribute('role', 'tablist'); list.setAttribute('aria-label', '이 사건과 함께 볼 사건');
+    function select(key, focus) {
+      state.relatedTab = key;
+      for (const item of tabs) {
+        const on = item.key === key;
+        item.tab.setAttribute('aria-selected', String(on)); item.tab.tabIndex = on ? 0 : -1; item.panel.hidden = !on;
+        if (on && focus) item.tab.focus();
+      }
+      placePeek();
+    }
+    for (const [key, label, node] of panes) {
+      const tab = button(label, () => select(key, false), 'tv-rel-tab'), panel = el('div', 'tv-rel-panel');
+      tab.setAttribute('role', 'tab'); tab.id = 'tv-rel-' + serial + '-' + key; panel.id = tab.id + '-panel';
+      tab.setAttribute('aria-controls', panel.id); panel.setAttribute('role', 'tabpanel'); panel.setAttribute('aria-labelledby', tab.id);
+      node.querySelector('h3')?.classList.add('tv-sr-only');
+      panel.append(node); list.append(tab); tabs.push({ key, tab, panel });
+    }
+    list.addEventListener('keydown', e => {
+      const index = tabs.findIndex(item => item.tab === document.activeElement); if (index < 0) return;
+      const move = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+      if (move) { e.preventDefault(); select(tabs[(index + move + tabs.length) % tabs.length].key, true); }
+      else if (e.key === 'Home' || e.key === 'End') { e.preventDefault(); select(tabs[e.key === 'Home' ? 0 : tabs.length - 1].key, true); }
+    });
+    box.append(list, ...tabs.map(item => item.panel));
+    select(tabs.some(item => item.key === state.relatedTab) ? state.relatedTab : tabs[0].key, false);
+    return box;
+  }
   function sourcesSection(event) {
     const sources = el('details', 'tv-detail-section tv-sources'); sources.append(el('summary', '', '출처 ' + event.sources.length + '건'));
     sources.append(el('p', 'tv-note', precisions[event.date.precision] + ' · ' + calendars[event.date.calendar]));
@@ -837,9 +881,7 @@ body.tv-detail-open { overflow:hidden; }
     main.append(kicker, el('h2', 'tv-daily-title', event.title), el('p', 'tv-detail-date tv-daily-when', fullDate(event)));
     if (event.originalTitle) main.append(el('p', 'tv-original-title', event.originalTitle + (event.originalLanguage ? ' (' + event.originalLanguage + ')' : '')));
     main.append(el('p', 'tv-summary', event.summary || '아직 요약을 정리하지 않았어요.'), section('자세히', event.description), meaningSection(event), sourcesSection(event));
-    const axis = axisSection(event); if (axis) side.append(axis);
-    side.append(nearSection(event));
-    const connected = connectedSection(event); if (connected) side.append(connected);
+    side.append(relatedTabs(event));
     const actions = el('div', 'tv-daily-actions');
     actions.append(button('이 시기를 표에서 보기', () => showInTable(event), 'tv-daily-go'));
     side.append(actions);
@@ -951,9 +993,7 @@ body.tv-detail-open { overflow:hidden; }
     if (event.originalTitle) content.append(el('p', 'tv-original-title', event.originalTitle + (event.originalLanguage ? ' (' + event.originalLanguage + ')' : '')));
     content.append(el('p', 'tv-summary', event.summary || '아직 요약을 정리하지 않았어요.'), section('자세히', event.description));
     content.append(meaningSection(event));
-    const axis = axisSection(event); if (axis) content.append(axis);
-    const connected = connectedSection(event); if (connected) content.append(connected);
-    content.append(nearSection(event), sourcesSection(event));
+    content.append(relatedTabs(event), sourcesSection(event));
     $('tv-detail').hidden = false; $('tv-backdrop').hidden = false;
     $('tv-main').inert = true; document.body.classList.add('tv-detail-open');
     content.scrollTop = 0; $('tv-close').focus();
@@ -974,7 +1014,7 @@ body.tv-detail-open { overflow:hidden; }
     if (e.key === 'Escape') { e.preventDefault(); if (!$('tv-peek').hidden) closePeek(); else closeDetail(); }
     if (e.key === 'Tab') {
       const panels = [$('tv-detail'), $('tv-peek')].filter(panel => !panel.hidden);
-      const focusable = panels.flatMap(panel => Array.from(panel.querySelectorAll('button, a[href], summary'))).filter(node => node.getClientRects().length);
+      const focusable = panels.flatMap(panel => Array.from(panel.querySelectorAll('button, a[href], summary'))).filter(node => node.getClientRects().length && node.tabIndex >= 0);
       const first = focusable[0], last = focusable[focusable.length - 1];
       if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
@@ -996,7 +1036,7 @@ body.tv-detail-open { overflow:hidden; }
     { target: () => root.querySelector('[data-set-view="daily"]'), title: '하루 한 사건', text: '날마다 한 건씩 바뀌는 추천 사건을 크게 보여 줘요. 이전 추천과 다음 추천도 넘겨 볼 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="table"]'), title: '나란히 보기', text: '같은 시간대의 사건을 영역별로 한 줄에 놓아요. 지역, 세부 영역, 낱말로 거를 수 있어요.' },
     { target: () => root.querySelector('.tv-3d-link'), title: '3D로 보기', text: '한 가지 이유로 묶은 축과 사건을 그물처럼 펼쳐 마우스로 돌려 볼 수 있어요. 높이가 시간이에요.' },
-    { target: () => state.view === 'daily' ? root.querySelector('.tv-daily-side button') : root.querySelector('#tv-tbody .tv-card'), title: '사건 누르기', text: '사건을 누르면 자세한 설명과 출처, 이 사건이 놓인 축, 이어진 사건, 같은 무렵 다른 영역의 사건이 열려요.' },
+    { target: () => state.view === 'daily' ? root.querySelector('.tv-daily-side .tv-rel-tabs') : root.querySelector('#tv-tbody .tv-card'), title: '함께 볼 사건', text: '탭을 바꿔 가며 이 사건이 놓인 축, 같은 무렵 다른 곳의 사건, 이유가 있어 이어진 사건을 볼 수 있어요. 사건을 누르면 자세한 설명과 출처가 열려요.' },
     { target: () => root.querySelector('.tv-theme-control'), title: '화면 모양', text: '밝게, 어둡게, 귀엽게 가운데 언제든 바꿀 수 있어요.' },
     { target: () => $('tv-tour-open'), title: '설명 다시 보기', text: '이 안내는 여기서 언제든 다시 볼 수 있어요.' },
     { choose: true, title: '어떤 모양으로 볼까요?', text: '누르면 바로 바뀌어요. 고른 모양은 이 브라우저에 저장되어 다음에도 그대로 열려요.' }
