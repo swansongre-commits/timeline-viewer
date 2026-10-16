@@ -224,6 +224,31 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 #timeline-viewer .tv-source h4 { margin:0 0 6px; font-size:13px; font-weight:600; line-height:1.6; overflow-wrap:anywhere; }
 .tv-source-link { display:block; font-size:12px; overflow-wrap:anywhere; margin-top:6px; }
 .tv-daily { max-width:1200px; padding:28px 20px 48px; }
+.tv-axesv { max-width:1200px; padding:28px 20px 48px; }
+.tv-axesv-layout { display:grid; grid-template-columns:minmax(260px,340px) minmax(0,1fr); gap:0 56px; align-items:start; margin-top:28px; }
+.tv-axesv-list { position:sticky; top:16px; min-width:0; max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); overflow:auto; padding-right:4px; }
+.tv-axesv-areas { display:flex; flex-wrap:wrap; gap:5px; }
+#timeline-viewer .tv-axesv-area { font-size:12px; min-height:30px; padding:4px 8px; }
+.tv-axesv-search { display:block; margin-top:10px; }
+#tv-axesv-search { width:100%; box-sizing:border-box; }
+.tv-axesv-items { list-style:none; margin:12px 0 0; padding:0; }
+#timeline-viewer .tv-axesv-item { display:flex; align-items:flex-start; gap:8px; width:100%; min-height:0; padding:10px 8px; border:0; border-top:1px solid var(--line); border-radius:0; color:var(--ink); background:var(--clear); text-align:left; font-weight:400; }
+.tv-axesv-items li:first-child .tv-axesv-item { border-top:0; }
+#timeline-viewer .tv-axesv-item:hover .tv-axesv-item-title { text-decoration:underline; text-underline-offset:3px; }
+#timeline-viewer .tv-axesv-item[aria-current="true"] { background:var(--surface); border-radius:var(--card-radius); }
+#timeline-viewer .tv-axesv-item[aria-current="true"] .tv-axesv-item-title { font-weight:700; }
+.tv-axesv-item .tv-area-dot { margin-top:8px; }
+.tv-axesv-item-body { display:block; min-width:0; }
+.tv-axesv-item-title { display:block; font-size:14px; font-weight:600; line-height:1.5; overflow-wrap:anywhere; }
+.tv-axesv-item-meta { display:block; margin-top:2px; font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.tv-axesv-detail { min-width:0; }
+#timeline-viewer .tv-axesv-title { margin:12px 0 0; font-size:28px; font-weight:700; line-height:1.35; letter-spacing:-.01em; overflow-wrap:anywhere; }
+.tv-axesv-meta { margin:6px 0 0; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.tv-axesv-why,.tv-axesv-flow { margin-top:32px; padding-top:20px; border-top:1px solid var(--line); }
+#timeline-viewer .tv-axesv-why > h3,#timeline-viewer .tv-axesv-flow > h3 { margin:0 0 10px; font-size:18px; font-weight:700; line-height:1.4; }
+.tv-axesv-why .tv-axis-why { max-width:68ch; margin:0; }
+#timeline-viewer .tv-axesv-flow > h3 + .tv-note { margin:-4px 0 12px; font-size:13px; }
+#timeline-viewer .tv-axis-whole { margin-top:12px; font-size:12px; min-height:30px; padding:4px 10px; }
 .tv-daily-bar { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px 16px; padding-bottom:14px; border-bottom:1px solid var(--line-strong); }
 .tv-daily-label { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; min-width:0; }
 .tv-daily-label strong { font-size:16px; font-weight:700; }
@@ -336,6 +361,8 @@ body.tv-detail-open { overflow:hidden; }
 :root[data-theme="cute"] .tv-daily-side > .tv-detail-section,:root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:16px; padding:20px 22px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:0 6px 20px rgba(176,48,106,.06); }
 :root[data-theme="cute"] .tv-daily-side > .tv-detail-section:first-child { margin-top:0; }
 /* 상세 칸: 구역마다 흰 카드, 바탕은 연분홍 */
+:root[data-theme="cute"] .tv-axesv-detail { padding:22px 24px 26px; background:var(--surface); border:1px solid var(--line); border-radius:20px; box-shadow:0 6px 20px rgba(176,48,106,.06); }
+:root[data-theme="cute"] #timeline-viewer .tv-axesv-item[aria-current="true"] { border-radius:14px; box-shadow:0 2px 8px rgba(176,48,106,.08); }
 :root[data-theme="cute"] .tv-rel-tabs { gap:6px; padding-bottom:8px; border-bottom:0; }
 :root[data-theme="cute"] #timeline-viewer .tv-rel-tab { min-height:36px; margin:0; padding:6px 14px; border:1px solid var(--line); border-radius:999px; background:var(--surface); }
 :root[data-theme="cute"] #timeline-viewer .tv-rel-tab[aria-selected="true"] { color:var(--selected-ink); background:var(--selected-bg); border-color:var(--selected-bg); }
@@ -349,6 +376,9 @@ body.tv-detail-open { overflow:hidden; }
   .tv-search-label { min-width:200px; }
 }
 @media(max-width:900px) {
+  .tv-axesv-layout { grid-template-columns:minmax(0,1fr); gap:24px; }
+  .tv-axesv-list { position:static; max-height:none; overflow:visible; padding-right:0; }
+  .tv-axesv-items { max-height:45vh; overflow:auto; border-bottom:1px solid var(--line); }
   .tv-daily-layout { grid-template-columns:minmax(0,1fr); }
   .tv-daily-side { margin-top:40px; }
 }
@@ -360,7 +390,9 @@ body.tv-detail-open { overflow:hidden; }
   .tv-masthead { padding:16px; }
   #timeline-viewer h1 { font-size:22px; }
   .tv-top { flex-wrap:wrap; gap:12px; }
-  .tv-theme-control { width:100%; gap:5px; justify-content:flex-end; }
+  .tv-view-control { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); width:100%; }
+  #timeline-viewer .tv-view-control button,#timeline-viewer .tv-view-control .tv-3d-link { min-width:0; margin-left:0; padding:6px 2px; font-size:12px; white-space:nowrap; text-align:center; justify-content:center; }
+  .tv-theme-control { flex:1; gap:5px; justify-content:flex-end; }
   #timeline-viewer .tv-tour-open { width:32px; padding:0; border-radius:50%; font-size:14px; }
   .tv-tour-open-icon { display:inline; }
   .tv-tour-open-label { display:none; }
@@ -390,6 +422,7 @@ body.tv-detail-open { overflow:hidden; }
         <div class="tv-view-control" role="group" aria-label="보기 방식">
           <button type="button" data-set-view="daily" aria-pressed="true">하루 한 사건</button>
           <button type="button" data-set-view="table" aria-pressed="false">나란히 보기</button>
+          <button type="button" data-set-view="axes" aria-pressed="false">축으로 보기</button>
           <a class="tv-3d-link" href="graph3d.html">3D로 보기</a>
         </div>
         <button type="button" id="tv-tour-open" class="tv-tour-open" aria-label="설명 다시 보기"><span class="tv-tour-open-icon" aria-hidden="true">?</span><span class="tv-tour-open-label">설명 다시 보기</span></button>
@@ -409,6 +442,18 @@ body.tv-detail-open { overflow:hidden; }
       </section>
     </header>
     <section id="tv-daily" class="tv-daily" aria-label="하루 한 사건"></section>
+    <section id="tv-axes-view" class="tv-axesv" aria-label="축으로 보기" hidden>
+      <div class="tv-daily-bar"><div class="tv-daily-label"><strong>축으로 보기</strong><span class="tv-daily-date" id="tv-axesv-count"></span></div></div>
+      <p class="tv-note tv-daily-note">축은 한 가지 이유로 묶은 사건들이에요. 축을 고르면 왜 묶었는지와 사건의 흐름을 시간 순서로 볼 수 있어요.</p>
+      <div class="tv-axesv-layout">
+        <div class="tv-axesv-list">
+          <div class="tv-axesv-areas" id="tv-axesv-areas" role="group" aria-label="영역으로 좁히기"></div>
+          <label class="tv-axesv-search" for="tv-axesv-search"><span class="tv-sr-only">축 이름과 이유에서 찾기</span><input type="search" id="tv-axesv-search" placeholder="축 찾기" autocomplete="off"></label>
+          <ol id="tv-axesv-items" class="tv-axesv-items" aria-label="축 목록"></ol>
+        </div>
+        <article id="tv-axesv-detail" class="tv-axesv-detail"></article>
+      </div>
+    </section>
     <div id="tv-table-view" hidden>
     <div class="tv-resultbar"><strong id="tv-result" role="status" aria-live="polite"></strong><details class="tv-overview"><summary>한눈에 보기 <span id="tv-overview-total"></span></summary><div id="tv-statistics"></div></details></div>
     <div class="tv-table-wrap">
@@ -724,6 +769,38 @@ body.tv-detail-open { overflow:hidden; }
   function axisYear(value) {
     const y = Number(value); return y < 0 ? '기원전 ' + number(-y) : String(y);
   }
+  // 축의 사건을 시간 순서로 늘어놓습니다. currentId는 "지금 보는 사건"으로 표시하고 누를 수 없게 둡니다.
+  function axisRows(axis, currentId, open) {
+    const rows = el('div', 'tv-nearby-list tv-axis-list');
+    const members = axis.members.map(member => ({ role: member.role, phase: member.phase, item: byId.get(member.event) })).filter(member => member.item).sort((a, b) => model.compare(a.item, b.item));
+    for (const member of members) {
+      const current = member.item.id === currentId, area = areaMap.get(model.primary(member.item)).name;
+      const row = current ? el('div', 'tv-neighbor tv-axis-row is-current') : button('', () => open(member.item, row, member), 'tv-neighbor tv-axis-row');
+      row.dataset.eventId = member.item.id; row.dataset.area = model.primary(member.item);
+      if (!current) row.setAttribute('aria-label', area + ' · ' + yearText(member.item) + ' ' + member.item.title + ', 상세 보기');
+      const body = el('span', 'tv-axis-body'), title = el('span', 'tv-neighbor-title', member.item.title);
+      if (current) title.append(el('span', 'tv-axis-now', '지금 보는 사건'));
+      const role = el('span', 'tv-axis-role', member.role);
+      if (member.phase) role.prepend(el('span', 'tv-axis-phase', member.phase === 'before' ? '앞선 바탕' : '뒤에 이어진 일'));
+      body.append(title, role);
+      row.append(areaDot(), el('span', 'tv-neighbor-area', area), el('span', 'tv-neighbor-year', yearText(member.item)), body);
+      rows.append(row);
+    }
+    return rows;
+  }
+  function axisBasis(axis) {
+    const links = (axis.sources || []).filter(source => { try { const url = new URL(source.url); return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password; } catch { return false; } });
+    if (!links.length) return null;
+    const basis = el('details', 'tv-axis-basis'); basis.append(el('summary', '', '이 축의 근거 ' + links.length + '건'));
+    for (const source of links) {
+      const link = el('a', 'tv-source-link', source.title || source.url); link.href = new URL(source.url).href; link.target = '_blank'; link.rel = 'noopener noreferrer';
+      link.setAttribute('aria-label', (source.title || '근거') + ', 새 탭에서 열기'); basis.append(link);
+    }
+    return basis;
+  }
+  function axisPeriodText(axis) {
+    return axis.period?.start ? axisYear(axis.period.start) + '~' + axisYear(axis.period.end) + '년' : '';
+  }
   function axisSection(event) {
     const list = axesByEvent.get(event.id);
     if (!list) return null;
@@ -733,32 +810,10 @@ body.tv-detail-open { overflow:hidden; }
       const box = el('div', 'tv-connection-group tv-axis'); box.dataset.axisId = axis.id;
       const heading = el('h4', '', axis.title);
       heading.append(el('small', '', (axis.period?.start ? axisYear(axis.period.start) + '~' + axisYear(axis.period.end) + '년 · ' : '') + axis.members.length + '건'));
-      box.append(heading, el('p', 'tv-axis-why', axis.why));
-      const rows = el('div', 'tv-nearby-list tv-axis-list');
-      const members = axis.members.map(member => ({ role: member.role, phase: member.phase, item: byId.get(member.event) })).filter(member => member.item).sort((a, b) => model.compare(a.item, b.item));
-      for (const member of members) {
-        const current = member.item.id === event.id, area = areaMap.get(model.primary(member.item)).name;
-        const row = current ? el('div', 'tv-neighbor tv-axis-row is-current') : button('', () => openRelated(member.item.id, row, { label: '같은 축 · ' + axis.title, text: member.role }), 'tv-neighbor tv-axis-row');
-        row.dataset.eventId = member.item.id; row.dataset.area = model.primary(member.item);
-        if (!current) row.setAttribute('aria-label', area + ' · ' + yearText(member.item) + ' ' + member.item.title + ', 상세 보기');
-        const body = el('span', 'tv-axis-body'), title = el('span', 'tv-neighbor-title', member.item.title);
-        if (current) title.append(el('span', 'tv-axis-now', '지금 보는 사건'));
-        const role = el('span', 'tv-axis-role', member.role);
-        if (member.phase) role.prepend(el('span', 'tv-axis-phase', member.phase === 'before' ? '앞선 바탕' : '뒤에 이어진 일'));
-        body.append(title, role);
-        row.append(areaDot(), el('span', 'tv-neighbor-area', area), el('span', 'tv-neighbor-year', yearText(member.item)), body);
-        rows.append(row);
-      }
-      box.append(rows);
-      const links = (axis.sources || []).filter(source => { try { const url = new URL(source.url); return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password; } catch { return false; } });
-      if (links.length) {
-        const basis = el('details', 'tv-axis-basis'); basis.append(el('summary', '', '이 축의 근거 ' + links.length + '건'));
-        for (const source of links) {
-          const link = el('a', 'tv-source-link', source.title || source.url); link.href = new URL(source.url).href; link.target = '_blank'; link.rel = 'noopener noreferrer';
-          link.setAttribute('aria-label', (source.title || '근거') + ', 새 탭에서 열기'); basis.append(link);
-        }
-        box.append(basis);
-      }
+      const whole = button('이 축 전체 보기', () => { closeDetail(); setView('axes'); selectAxis(axis.id, false); }, 'tv-axis-whole');
+      box.append(heading, el('p', 'tv-axis-why', axis.why), axisRows(axis, event.id, (item, row, member) => openRelated(item.id, row, { label: '같은 축 · ' + axis.title, text: member.role })));
+      const basis = axisBasis(axis); if (basis) box.append(basis);
+      box.append(whole);
       s.append(box);
     }
     return s;
@@ -846,6 +901,79 @@ body.tv-detail-open { overflow:hidden; }
     }
     return sources;
   }
+  // 축으로 보기(2026-10-16 사용자 요청): 축 목록에서 하나를 고르면 그 이유와 사건을 시간 순서로 보여 줍니다.
+  // 영역과 낱말로 목록을 좁히고, 고른 축은 주소 끝(#axes/축 id)에 남겨 다시 열 때 그대로 엽니다.
+  const axisList = [...(data.axes || [])].sort((a, b) => {
+    const order = data.areas.findIndex(area => area.area === a.area) - data.areas.findIndex(area => area.area === b.area);
+    return order || Number(a.period?.start ?? 0) - Number(b.period?.start ?? 0) || a.title.localeCompare(b.title, 'ko');
+  });
+  const axisState = { area: '', query: '', current: null };
+  function renderAxesView() {
+    const areaBox = $('tv-axesv-areas'); areaBox.replaceChildren();
+    const choices = [['', '전체', axisList.length], ...data.areas.map(area => [area.area, area.name, axisList.filter(axis => axis.area === area.area).length]).filter(choice => choice[2])];
+    for (const [key, name, count] of choices) {
+      const choice = button(name + ' ' + count, () => { axisState.area = key; renderAxesView(); }, 'tv-axesv-area');
+      choice.setAttribute('aria-pressed', String(axisState.area === key)); areaBox.append(choice);
+    }
+    const query = axisState.query.normalize('NFKC').toLocaleLowerCase('ko-KR');
+    const shown = axisList.filter(axis => (!axisState.area || axis.area === axisState.area)
+      && (!query || (axis.title + ' ' + axis.why + ' ' + (axis.summary || '')).normalize('NFKC').toLocaleLowerCase('ko-KR').includes(query)));
+    $('tv-axesv-count').textContent = '축 ' + number(axisList.length) + '개' + (shown.length !== axisList.length ? ' 가운데 ' + number(shown.length) + '개' : '');
+    const list = $('tv-axesv-items'); list.replaceChildren();
+    for (const axis of shown) {
+      const item = el('li'), choice = button('', () => selectAxis(axis.id, true), 'tv-axesv-item');
+      choice.dataset.area = axis.area; choice.dataset.axisId = axis.id;
+      const body = el('span', 'tv-axesv-item-body');
+      body.append(el('span', 'tv-axesv-item-title', axis.title), el('span', 'tv-axesv-item-meta', [areaMap.get(axis.area)?.name, axisPeriodText(axis), axis.members.length + '건'].filter(Boolean).join(' · ')));
+      choice.append(areaDot(), body);
+      if (axis.id === axisState.current) choice.setAttribute('aria-current', 'true');
+      item.append(choice); list.append(item);
+    }
+    if (!shown.length) list.append(el('li', 'tv-note', '맞는 축이 없어요. 영역이나 낱말을 바꿔 보세요.'));
+    if (!axisState.current || !axisById.has(axisState.current)) axisState.current = (shown[0] || axisList[0])?.id || null;
+    renderAxisDetail();
+  }
+  const axisById = new Map(axisList.map(axis => [axis.id, axis]));
+  function renderAxisDetail() {
+    const box = $('tv-axesv-detail'); box.replaceChildren();
+    const axis = axisById.get(axisState.current);
+    root.querySelectorAll('.tv-axesv-item').forEach(node => node.removeAttribute('aria-current'));
+    if (!axis) { box.append(el('p', 'tv-empty', '아직 축이 없어요.')); return; }
+    const mine = Array.from(root.querySelectorAll('.tv-axesv-item')).find(node => node.dataset.axisId === axis.id);
+    if (mine) { mine.setAttribute('aria-current', 'true'); keepInList(mine); }
+    box.dataset.area = axis.area;
+    const kicker = el('div', 'tv-daily-kicker'), chip = el('span', 'tv-meta-chip'); chip.dataset.area = axis.area;
+    const sub = areaMap.get(axis.area)?.subs.find(item => item.sub === axis.sub);
+    chip.append(areaDot(), el('span', '', (areaMap.get(axis.area)?.name || '') + (sub ? ' · ' + sub.name : ''))); kicker.append(chip);
+    box.append(kicker, el('h2', 'tv-axesv-title', axis.title), el('p', 'tv-axesv-meta', [axisPeriodText(axis), '사건 ' + axis.members.length + '건'].filter(Boolean).join(' · ')));
+    const why = el('section', 'tv-axesv-why'); why.append(el('h3', '', '왜 한 줄로 묶었나'), el('p', 'tv-axis-why', axis.why)); box.append(why);
+    const flow = el('section', 'tv-axesv-flow'); flow.append(el('h3', '', '사건의 흐름'), el('p', 'tv-note', '시간 순서로 놓았어요. 사건을 누르면 자세히 볼 수 있어요.'));
+    flow.append(axisRows(axis, null, item => openDetail(item.id)));
+    const basis = axisBasis(axis); if (basis) flow.append(basis);
+    box.append(flow);
+  }
+  // 고른 축이 목록 칸 안에서 보이도록 목록만 스크롤합니다(화면 전체는 움직이지 않음).
+  function keepInList(node) {
+    for (let box = node.parentElement; box && box !== root; box = box.parentElement) {
+      const flow = getComputedStyle(box).overflowY;
+      if ((flow === 'auto' || flow === 'scroll') && box.scrollHeight > box.clientHeight) {
+        const outer = box.getBoundingClientRect(), inner = node.getBoundingClientRect();
+        if (inner.top < outer.top || inner.bottom > outer.bottom) box.scrollTop += inner.top - outer.top - outer.height / 3;
+        return;
+      }
+    }
+  }
+  function selectAxis(id, fromList) {
+    if (!axisById.has(id)) return;
+    axisState.current = id;
+    if (!axisList.some(axis => axis.id === id && (!axisState.area || axis.area === axisState.area))) axisState.area = '';
+    try { history.replaceState(null, '', '#axes/' + id); } catch {}
+    renderAxesView();
+    if (fromList && window.innerWidth <= 900) $('tv-axesv-detail').scrollIntoView({ block: 'start' });
+    else if (!fromList) window.scrollTo({ top: 0, behavior: 'instant' });
+  }
+  $('tv-axesv-search').addEventListener('input', e => { axisState.query = e.target.value.trim(); renderAxesView(); });
+
   // 하루 한 사건: 날마다 영역을 돌아가며 한 건을 권합니다. 사건이 일어난 날짜와는 상관이 없습니다.
   const dailyAreas = data.areas.filter(area => (data.daily?.[area.area] || []).length);
   const kst = 9 * 60 * 60 * 1000, oneDay = 24 * 60 * 60 * 1000;
@@ -889,9 +1017,10 @@ body.tv-detail-open { overflow:hidden; }
   }
   function setView(view) {
     state.view = view;
-    $('tv-daily').hidden = view !== 'daily'; $('tv-table-view').hidden = view !== 'table'; $('tv-filters').hidden = view !== 'table';
+    $('tv-daily').hidden = view !== 'daily'; $('tv-table-view').hidden = view !== 'table'; $('tv-filters').hidden = view !== 'table'; $('tv-axes-view').hidden = view !== 'axes';
     root.querySelectorAll('[data-set-view]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.setView === view)));
     if (view === 'daily') renderDaily();
+    if (view === 'axes') renderAxesView();
     window.scrollTo({ top: 0, behavior: 'instant' });
   }
   // 연관 사건: 상세 칸이 열려 있으면 상세는 그대로 두고 오른쪽에 카드를 엽니다. 하루 한 사건 화면에서는 상세 칸을 엽니다.
@@ -1022,7 +1151,9 @@ body.tv-detail-open { overflow:hidden; }
   });
   setupFilters(); renderOverview(); refresh();
   root.querySelectorAll('[data-set-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.setView)));
-  setView(location.hash === '#table' ? 'table' : 'daily');
+  const startHash = location.hash;
+  if (startHash.startsWith('#axes/')) axisState.current = startHash.slice(6);
+  setView(startHash === '#table' ? 'table' : startHash === '#axes' || startHash.startsWith('#axes/') ? 'axes' : 'daily');
   const tableScroll = $('tv-table-scroll'), headScroll = $('tv-head-scroll');
   tableScroll.addEventListener('scroll', () => { headScroll.scrollLeft = tableScroll.scrollLeft; }, { passive: true });
   window.addEventListener('resize', () => { headScroll.scrollLeft = tableScroll.scrollLeft; });
@@ -1035,6 +1166,7 @@ body.tv-detail-open { overflow:hidden; }
     { title: '사건의 지평선에 오신 것을 환영해요', text: '같은 때 서로 다른 세계에서 일어난 일을 나란히 보는 연표예요. 주요 기능을 짧게 보여 드릴게요.' },
     { target: () => root.querySelector('[data-set-view="daily"]'), title: '하루 한 사건', text: '날마다 한 건씩 바뀌는 추천 사건을 크게 보여 줘요. 이전 추천과 다음 추천도 넘겨 볼 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="table"]'), title: '나란히 보기', text: '같은 시간대의 사건을 영역별로 한 줄에 놓아요. 지역, 세부 영역, 낱말로 거를 수 있어요.' },
+    { target: () => root.querySelector('[data-set-view="axes"]'), title: '축으로 보기', text: '한 가지 이유로 묶은 사건들을 축이라고 불러요. 축을 고르면 왜 묶었는지와 사건의 흐름을 시간 순서로 따라 읽을 수 있어요.' },
     { target: () => root.querySelector('.tv-3d-link'), title: '3D로 보기', text: '한 가지 이유로 묶은 축과 사건을 그물처럼 펼쳐 마우스로 돌려 볼 수 있어요. 높이가 시간이에요.' },
     { target: () => state.view === 'daily' ? root.querySelector('.tv-daily-side .tv-rel-tabs') : root.querySelector('#tv-tbody .tv-card'), title: '함께 볼 사건', text: '탭을 바꿔 가며 이 사건이 놓인 축, 같은 무렵 다른 곳의 사건, 이유가 있어 이어진 사건을 볼 수 있어요. 사건을 누르면 자세한 설명과 출처가 열려요.' },
     { target: () => root.querySelector('.tv-theme-control'), title: '화면 모양', text: '밝게, 어둡게, 귀엽게 가운데 언제든 바꿀 수 있어요.' },
