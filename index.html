@@ -71,15 +71,19 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 .tv-search-label { display:flex; align-items:center; gap:7px; font-size:12px; flex:1; min-width:120px; }
 #tv-search { width:100%; min-width:0; }
 #tv-search::placeholder { color:var(--mast-muted); opacity:1; }
-.tv-sub-filter { position:relative; flex-shrink:0; }
-.tv-sub-filter > summary { min-height:36px; padding:7px 10px; border:1px solid var(--mast-line); border-radius:var(--control-radius); white-space:nowrap; }
-#tv-sub-count { font-size:12px; margin-left:5px; color:var(--mast-muted); font-family:var(--font-number); }
-#tv-subareas { position:absolute; top:calc(100% + 8px); left:0; z-index:8; width:340px; max-width:calc(100vw - 64px); max-height:60vh; overflow:auto; display:flex; flex-direction:column; gap:6px; padding:12px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); }
-#timeline-viewer #tv-subareas button { color:var(--ink); background:var(--surface); border-color:var(--line); }
-#timeline-viewer #tv-subareas button[aria-pressed="true"] { background:var(--selected-bg); color:var(--selected-ink); border-color:var(--selected-bg); }
-#timeline-viewer #tv-subareas :focus-visible { outline-color:var(--focus); }
-.tv-area-filter { border-bottom:1px solid var(--line); padding:3px 0 6px; }
-.tv-area-filter summary { padding:3px 0; }
+#tv-subpop { position:fixed; top:calc(100% + 8px); left:0; z-index:8; width:340px; max-width:calc(100vw - 64px); max-height:60vh; overflow:auto; display:flex; flex-direction:column; gap:6px; padding:12px; border:1px solid var(--line-strong); background:var(--surface); color:var(--ink); }
+#timeline-viewer #tv-subpop button { color:var(--ink); background:var(--surface); border-color:var(--line); }
+#timeline-viewer #tv-subpop button[aria-pressed="true"] { background:var(--selected-bg); color:var(--selected-ink); border-color:var(--selected-bg); }
+#timeline-viewer #tv-subpop :focus-visible { outline-color:var(--focus); }
+.tv-subpop-head { display:flex; align-items:center; gap:8px; }
+.tv-subpop-head strong { font-size:14px; }
+.tv-subpop-foot { display:flex; justify-content:space-between; gap:8px; border-top:1px solid var(--line); padding-top:8px; }
+#timeline-viewer .tv-subpop-foot button { min-height:30px; padding:4px 10px; font-size:12px; }
+#timeline-viewer .tv-subpop-foot button:disabled { opacity:.45; cursor:default; }
+#timeline-viewer .tv-head-pick { display:inline-flex; align-items:center; gap:4px; min-height:0; padding:2px 0 6px; border:0; border-bottom:2px solid var(--area); border-radius:0; background:var(--clear); color:var(--ink); font-size:14px; font-weight:700; cursor:pointer; }
+#timeline-viewer .tv-head-pick:hover .tv-head-caret,#timeline-viewer .tv-head-pick[aria-expanded="true"] .tv-head-caret { color:var(--ink); }
+.tv-head-caret { font-size:11px; color:var(--muted); }
+.tv-table thead th.is-picked small { color:var(--ink); }
 .tv-chips { display:flex; flex-wrap:wrap; gap:6px; padding-top:8px; }
 #timeline-viewer .tv-chip { font-size:12px; min-height:32px; padding:6px 8px; }
 .tv-resultbar { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:4px 16px; padding:12px 0; }
@@ -378,12 +382,12 @@ body.tv-detail-open { overflow:hidden; }
 :root[data-theme="cute"] #timeline-viewer .tv-card { box-shadow:0 2px 8px color-mix(in srgb,var(--area) 14%,transparent); }
 :root[data-theme="cute"] #timeline-viewer .tv-card:hover,:root[data-theme="cute"] #timeline-viewer .tv-card.is-selected { box-shadow:0 0 0 1px var(--area),0 6px 18px color-mix(in srgb,var(--area) 32%,transparent); }
 :root[data-theme="cute"] .tv-period strong { border-radius:8px; background:color-mix(in srgb,var(--selected-bg) 14%,var(--surface)); color:var(--ink); }
-:root[data-theme="cute"] .tv-table thead [data-area-head] > span { border-bottom:0; padding:2px 10px; border-radius:10px; background:color-mix(in srgb,var(--area) 16%,var(--surface-soft)); }
+:root[data-theme="cute"] #timeline-viewer .tv-table thead .tv-head-pick { border-bottom:0; padding:2px 10px; border-radius:10px; background:color-mix(in srgb,var(--area) 16%,var(--surface-soft)); }
 :root[data-theme="cute"] .tv-tour-card,:root[data-theme="cute"] .tv-tour-hole { border-radius:14px; }
 :root[data-theme="cute"] #timeline-viewer .tv-tour-choices button { padding:10px 24px; }
 :root[data-theme="cute"] .tv-detail { border-top-left-radius:14px; box-shadow:-12px 0 32px rgba(176,48,106,.12); }
 :root[data-theme="cute"] .tv-peek { border-color:var(--line); box-shadow:0 14px 36px rgba(176,48,106,.16); }
-:root[data-theme="cute"] #tv-subareas { border-color:var(--line); border-radius:var(--card-radius); box-shadow:0 10px 28px rgba(176,48,106,.14); }
+:root[data-theme="cute"] #tv-subpop { border-color:var(--line); border-radius:var(--card-radius); box-shadow:0 10px 28px rgba(176,48,106,.14); }
 :root[data-theme="cute"] .tv-meta-chip { background:var(--surface-soft); }
 /* 하루 한 사건: 본문과 옆 칸을 둥근 흰 카드로 */
 :root[data-theme="cute"] .tv-daily-main { padding:28px 30px; background:var(--surface); border:1px solid var(--line); border-radius:14px; box-shadow:0 10px 30px rgba(176,48,106,.08); }
@@ -434,8 +438,6 @@ body.tv-detail-open { overflow:hidden; }
   .tv-filters { gap:10px 8px; }
   .tv-filter-group { flex-wrap:wrap; }
   .tv-search-label { flex-basis:100%; min-width:0; }
-  #tv-sub-count { display:none; }
-  #tv-subareas { position:fixed; top:auto; left:32px; right:32px; width:auto; max-width:none; max-height:55vh; }
   .tv-resultbar { align-items:flex-start; }
   #tv-overview-total { display:none; }
   .tv-detail { top:auto; bottom:0; width:100%; max-height:88vh; max-height:88dvh; border-left:1px solid var(--line); border-right:1px solid var(--line); border-bottom:0; }
@@ -470,7 +472,6 @@ body.tv-detail-open { overflow:hidden; }
       </div>
       <section class="tv-filters" id="tv-filters" aria-label="사건 거르기" hidden>
         <div class="tv-filter-group" id="tv-regions" role="group" aria-label="지역"><span class="tv-filter-label">지역</span><button type="button" id="tv-region-all">전체</button></div>
-        <details class="tv-sub-filter" id="tv-sub-filter"><summary>세부 영역 <span id="tv-sub-count" class="tv-note"></span></summary><div id="tv-subareas"></div></details>
         <label class="tv-check"><input type="checkbox" id="tv-connected">축이나 이어짐이 있는 사건만</label>
         <label class="tv-search-label" for="tv-search"><span class="tv-sr-only">제목과 요약에서 찾기</span><input type="search" id="tv-search" placeholder="사건이나 낱말 찾기" autocomplete="off"></label>
         <button type="button" id="tv-reset">처음으로</button>
@@ -501,12 +502,13 @@ body.tv-detail-open { overflow:hidden; }
     <div id="tv-table-view" hidden>
     <div class="tv-resultbar"><strong id="tv-result" role="status" aria-live="polite"></strong><details class="tv-overview"><summary>한눈에 보기 <span id="tv-overview-total"></span></summary><div id="tv-statistics"></div></details></div>
     <div class="tv-table-wrap">
-      <div id="tv-sticky-head"><div id="tv-head-scroll" class="tv-head-scroll"><table class="tv-table" aria-hidden="true"><colgroup><col class="tv-period-col"><col><col><col><col><col><col><col><col><col></colgroup><thead id="tv-thead"></thead></table></div></div>
+      <div id="tv-sticky-head"><div id="tv-head-scroll" class="tv-head-scroll"><table class="tv-table" role="presentation"><colgroup><col class="tv-period-col"><col><col><col><col><col><col><col><col><col></colgroup><thead id="tv-thead"></thead></table></div></div>
       <div class="tv-table-scroll" id="tv-table-scroll" tabindex="0" role="region" aria-label="영역 나란히 표, 좁은 화면에서는 좌우로 넘길 수 있어요"><table class="tv-table" aria-label="같은 기간의 사건을 주 영역별로 나란히 보여 주는 표"><colgroup><col class="tv-period-col"><col><col><col><col><col><col><col><col><col></colgroup><thead id="tv-accessible-head" class="tv-sr-only"></thead><tbody id="tv-tbody"></tbody></table><p id="tv-no-results" class="tv-empty" hidden>맞는 사건이 없어요. 거르기 조건을 줄여 보세요.</p></div>
     </div>
     <p class="tv-note tv-foot">카드를 누르면 이 사건이 놓인 축, 이어진 사건, 같은 무렵의 사건을 볼 수 있어요. "축"은 한 가지 이유로 묶은 사건들, "이어짐"은 둘씩 이어 본 사건의 수, 고리(∞)는 여러 영역에 걸친 사건이에요.</p>
     </div>
   </main>
+  <div id="tv-subpop" class="tv-subpop" role="dialog" aria-modal="false" hidden></div>
   <div id="tv-backdrop" class="tv-backdrop" hidden></div>
   <aside id="tv-detail" class="tv-detail" role="dialog" aria-modal="true" aria-labelledby="tv-detail-title" hidden>
     <div class="tv-detail-head"><h2 id="tv-detail-title"></h2><button type="button" id="tv-close" aria-label="사건 상세 닫기">닫기</button></div>
@@ -551,11 +553,6 @@ body.tv-detail-open { overflow:hidden; }
   }
   choose(valid(saved) ? saved : 'auto');
   buttons.forEach(button => button.addEventListener('click', () => choose(button.dataset.setTheme, true)));
-  const dropdown = document.getElementById('tv-sub-filter');
-  document.addEventListener('click', event => { if (!dropdown.contains(event.target)) dropdown.open = false; });
-  dropdown.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { dropdown.open = false; dropdown.querySelector('summary').focus(); }
-  });
 })();
 (function startViewer(data, modelFactory, connectionFactory) {
   'use strict';
@@ -658,13 +655,23 @@ body.tv-detail-open { overflow:hidden; }
     visible = events.filter(matches);
     $('tv-result').textContent = number(events.length) + '건 중 ' + number(visible.length) + '건';
     const headings = el('tr'); headings.append(el('th', 'tv-period-head', '기간'));
+    // 영역 이름을 누르면 그 영역의 세부 영역을 고르는 드롭다운이 열립니다(2026-10-24 사용자 요청, 위쪽 "세부 영역" 단추를 옮김).
     data.areas.forEach(area => {
       const th = el('th'); th.scope = 'col'; th.dataset.areaHead = area.area;
-      th.append(el('span', '', area.name), el('small', '', number(visible.filter(e => model.primary(e) === area.area).length) + '건'));
+      const picked = area.subs.filter(sub => state.subs.has(area.area + '/' + sub.sub)).length;
+      const pick = button('', () => toggleSubPop(area.area), 'tv-head-pick');
+      pick.dataset.areaPick = area.area;
+      pick.setAttribute('aria-haspopup', 'true'); pick.setAttribute('aria-expanded', String(subPop.area === area.area));
+      pick.setAttribute('aria-label', area.name + ' 세부 영역 고르기' + (picked ? ', ' + picked + '개 고름' : ''));
+      const caret = el('span', 'tv-head-caret', '▾'); caret.setAttribute('aria-hidden', 'true');
+      pick.append(el('span', '', area.name), caret);
+      th.append(pick, el('small', '', number(visible.filter(e => model.primary(e) === area.area).length) + '건' + (picked ? ' · 세부 ' + picked : '')));
+      if (picked) th.classList.add('is-picked');
       headings.append(th);
     });
     $('tv-thead').replaceChildren(headings);
     const accessibleHeadings = headings.cloneNode(true);
+    accessibleHeadings.querySelectorAll('button').forEach(node => node.replaceWith(node.querySelector('span')?.textContent || ''));
     accessibleHeadings.querySelectorAll('th').forEach((th, index) => {
       th.removeAttribute('data-area-head');
       th.id = 'tv-col-' + (index ? data.areas[index - 1].area : 'period');
@@ -731,8 +738,49 @@ body.tv-detail-open { overflow:hidden; }
     state.expanded.clear(); renderTable();
     $('tv-region-all').setAttribute('aria-pressed', String(!state.regions.size));
     root.querySelectorAll('[data-region]').forEach(b => b.setAttribute('aria-pressed', String(state.regions.has(b.dataset.region))));
-    root.querySelectorAll('[data-sub]').forEach(b => b.setAttribute('aria-pressed', String(state.subs.has(b.dataset.sub))));
-    $('tv-sub-count').textContent = state.subs.size ? state.subs.size + '개 골랐어요' : '모두 보고 있어요';
+    if (subPop.area) renderSubPop();
+  }
+  // 세부 영역 드롭다운: 표 머리의 영역 단추 아래에 하나만 엽니다. 머리 줄이 다시 그려져도 같은 영역 단추에 붙여 둡니다.
+  const subPop = { area: null };
+  function headPick(area) { return Array.from(root.querySelectorAll('[data-area-pick]')).find(node => node.dataset.areaPick === area); }
+  function placeSubPop() {
+    const pop = $('tv-subpop'), anchor = headPick(subPop.area);
+    if (pop.hidden || !anchor) return;
+    const box = anchor.getBoundingClientRect(), vw = document.documentElement.clientWidth, w = pop.offsetWidth;
+    pop.style.top = Math.round(box.bottom + 6) + 'px';
+    pop.style.left = Math.round(Math.min(Math.max(16, box.left), vw - w - 16)) + 'px';
+  }
+  function renderSubPop() {
+    const area = areaMap.get(subPop.area), pop = $('tv-subpop');
+    if (!area) { closeSubPop(false); return; }
+    pop.dataset.area = area.area; pop.setAttribute('aria-label', area.name + ' 세부 영역');
+    const head = el('div', 'tv-subpop-head'); head.append(areaDot(), el('strong', '', area.name), el('span', 'tv-note', '세부 영역으로 거르기'));
+    const chips = el('div', 'tv-chips');
+    for (const sub of area.subs) {
+      const key = area.area + '/' + sub.sub;
+      const count = events.filter(e => e.areas.some(a => a.area === area.area && a.sub === sub.sub)).length;
+      const b = button(sub.name + ' ' + number(count), () => { state.subs.has(key) ? state.subs.delete(key) : state.subs.add(key); refresh(); $('tv-subpop').querySelector('[data-sub="' + key + '"]')?.focus({ preventScroll: true }); }, 'tv-chip');
+      b.dataset.sub = key; b.setAttribute('aria-pressed', String(state.subs.has(key))); chips.append(b);
+    }
+    const any = area.subs.some(sub => state.subs.has(area.area + '/' + sub.sub));
+    const foot = el('div', 'tv-subpop-foot');
+    const all = button('이 영역 모두 보기', () => { for (const sub of area.subs) state.subs.delete(area.area + '/' + sub.sub); refresh(); }, 'tv-subpop-all');
+    all.disabled = !any;
+    foot.append(all, button('닫기', () => closeSubPop(true), 'tv-subpop-close'));
+    pop.replaceChildren(head, chips, foot);
+    pop.hidden = false;
+    root.querySelectorAll('[data-area-pick]').forEach(node => node.setAttribute('aria-expanded', String(node.dataset.areaPick === area.area)));
+    placeSubPop();
+  }
+  function toggleSubPop(area) {
+    if (subPop.area === area && !$('tv-subpop').hidden) { closeSubPop(true); return; }
+    subPop.area = area; renderSubPop();
+    $('tv-subpop').querySelector('[data-sub]')?.focus({ preventScroll: true });
+  }
+  function closeSubPop(focusBack) {
+    const area = subPop.area; subPop.area = null; $('tv-subpop').hidden = true;
+    root.querySelectorAll('[data-area-pick]').forEach(node => node.setAttribute('aria-expanded', 'false'));
+    if (focusBack && area) headPick(area)?.focus({ preventScroll: true });
   }
   function setupFilters() {
     $('tv-region-all').addEventListener('click', () => { state.regions.clear(); refresh(); });
@@ -740,17 +788,10 @@ body.tv-detail-open { overflow:hidden; }
       const b = button(name, () => { state.regions.has(key) ? state.regions.delete(key) : state.regions.add(key); refresh(); });
       b.dataset.region = key; $('tv-regions').append(b);
     }
-    for (const area of data.areas) {
-      const d = el('details', 'tv-area-filter');
-      d.append(el('summary', '', area.name));
-      const chips = el('div', 'tv-chips');
-      for (const sub of area.subs) {
-        const key = area.area + '/' + sub.sub;
-        const b = button(sub.name, () => { state.subs.has(key) ? state.subs.delete(key) : state.subs.add(key); refresh(); }, 'tv-chip');
-        b.dataset.sub = key; chips.append(b);
-      }
-      d.append(chips); $('tv-subareas').append(d);
-    }
+    document.addEventListener('click', e => { const pop = $('tv-subpop'); if (!pop.hidden && e.target.isConnected && !pop.contains(e.target) && !e.target.closest?.('[data-area-pick]')) closeSubPop(false); });
+    $('tv-subpop').addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); closeSubPop(true); } });
+    window.addEventListener('resize', placeSubPop);
+    window.addEventListener('scroll', placeSubPop, { passive: true });
     $('tv-connected').addEventListener('change', e => { state.connected = e.target.checked; refresh(); });
     $('tv-search').addEventListener('input', e => { state.query = e.target.value.trim().normalize('NFKC').toLocaleLowerCase('ko-KR'); refresh(); });
     $('tv-reset').addEventListener('click', () => {
@@ -1414,7 +1455,7 @@ body.tv-detail-open { overflow:hidden; }
   setView(startHash === '#table' ? 'table' : startHash === '#axes' || startHash.startsWith('#axes/') ? 'axes' : startHash === '#map' ? 'map' : 'daily');
   window.addEventListener('resize', () => { if (state.view === 'map') renderMapView(); });
   const tableScroll = $('tv-table-scroll'), headScroll = $('tv-head-scroll');
-  tableScroll.addEventListener('scroll', () => { headScroll.scrollLeft = tableScroll.scrollLeft; }, { passive: true });
+  tableScroll.addEventListener('scroll', () => { headScroll.scrollLeft = tableScroll.scrollLeft; placeSubPop(); }, { passive: true });
   window.addEventListener('resize', () => { headScroll.scrollLeft = tableScroll.scrollLeft; });
   // 처음 들어오면 화면을 어둡게 덮고 기능을 하나씩 밝혀 설명합니다(코치마크, 2026-10-16 사용자 요청).
   // 마지막 단계에서 화면 모양을 고르면 기존 모양 저장 칸(timeline-v2-theme)에 남아 다음에도 그 모양으로 열립니다.
@@ -1424,7 +1465,7 @@ body.tv-detail-open { overflow:hidden; }
   const tourSteps = [
     { title: '사건의 지평선에 오신 것을 환영해요', text: '같은 때 서로 다른 세계에서 일어난 일을 나란히 보는 연표예요. 주요 기능을 짧게 보여 드릴게요.' },
     { target: () => root.querySelector('[data-set-view="daily"]'), title: '하루 한 사건', text: '날마다 한 건씩 바뀌는 추천 사건을 크게 보여 줘요. 아래에는 해마다 같은 날 일어난 일도 모았어요. 이전 추천과 다음 추천으로 날을 넘겨 볼 수 있어요.' },
-    { target: () => root.querySelector('[data-set-view="table"]'), title: '나란히 보기', text: '같은 시간대의 사건을 영역별로 한 줄에 놓아요. 지역, 세부 영역, 낱말로 거를 수 있어요.' },
+    { target: () => root.querySelector('[data-set-view="table"]'), title: '나란히 보기', text: '같은 시간대의 사건을 영역별로 한 줄에 놓아요. 지역과 낱말로 거르고, 표 위의 영역 이름을 누르면 세부 영역으로 거를 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="axes"]'), title: '축으로 보기', text: '한 가지 이유로 묶은 사건들을 축이라고 불러요. 축을 고르면 왜 묶었는지와 사건의 흐름을 시간 순서로 따라 읽을 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="map"]'), title: '지도로 보기', text: '사건이 일어난 곳을 지도에 점으로 찍었어요. 세계, 유럽, 동아시아, 한반도로 범위를 바꾸고 영역과 시대로 거르고, 시대 흐름 재생으로 기원전부터 오늘까지 넘겨 볼 수 있어요. 점을 누르면 그곳의 사건이 나와요.' },
     { target: () => root.querySelector('.tv-3d-link'), title: '3D로 보기', text: '한 가지 이유로 묶은 축과 사건을 그물처럼 펼쳐 마우스로 돌려 볼 수 있어요. 높이가 시간이에요.' },
