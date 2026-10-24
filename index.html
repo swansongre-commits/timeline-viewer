@@ -247,7 +247,10 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 .tv-axesv-detail { min-width:0; }
 #timeline-viewer .tv-axesv-title { margin:12px 0 0; font-size:28px; font-weight:700; line-height:1.35; letter-spacing:-.01em; overflow-wrap:anywhere; }
 .tv-axesv-meta { margin:6px 0 0; font-size:13px; color:var(--muted); font-variant-numeric:tabular-nums; }
-.tv-axesv-why,.tv-axesv-flow { margin-top:32px; padding-top:20px; border-top:1px solid var(--line); }
+.tv-axesv-why,.tv-axesv-flow,.tv-axesv-related { margin-top:32px; padding-top:20px; border-top:1px solid var(--line); }
+#timeline-viewer .tv-axesv-related > h3 { margin:0 0 10px; font-size:18px; font-weight:700; line-height:1.4; }
+#timeline-viewer .tv-axesv-related > h3 + .tv-note { margin:-4px 0 12px; font-size:13px; }
+.tv-axesv-related-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:0 24px; }
 #timeline-viewer .tv-axesv-why > h3,#timeline-viewer .tv-axesv-flow > h3 { margin:0 0 10px; font-size:18px; font-weight:700; line-height:1.4; }
 .tv-axesv-why .tv-axis-why { max-width:68ch; margin:0; }
 #timeline-viewer .tv-axesv-flow > h3 + .tv-note { margin:-4px 0 12px; font-size:13px; }
@@ -261,6 +264,11 @@ body { margin:0; background:var(--bg); color:var(--ink); font-family:var(--font-
 #timeline-viewer .tv-daily-note { margin:10px 0 0; }
 .tv-daily-layout { display:grid; grid-template-columns:minmax(0,1.5fr) minmax(0,1fr); gap:0 56px; align-items:start; margin-top:36px; }
 .tv-daily-main,.tv-daily-side { min-width:0; }
+.tv-sameday { margin-top:48px; padding-top:20px; border-top:1px solid var(--line-strong); }
+#timeline-viewer .tv-sameday > h3 { margin:0 0 6px; font-size:18px; font-weight:700; line-height:1.4; }
+#timeline-viewer .tv-sameday > .tv-note { margin:0 0 12px; font-size:13px; }
+.tv-sameday-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:0 32px; }
+#timeline-viewer .tv-sameday-list .tv-neighbor:first-child { border-top:1px solid var(--line); padding-top:10px; }
 .tv-daily-kicker { display:flex; flex-wrap:wrap; gap:6px; }
 #timeline-viewer .tv-daily-title { margin:14px 0 0; font-size:36px; font-weight:700; line-height:1.25; letter-spacing:-.03em; overflow-wrap:anywhere; }
 #timeline-viewer .tv-daily-when { margin:10px 0 0; font-size:18px; }
@@ -965,6 +973,22 @@ body.tv-detail-open { overflow:hidden; }
     flow.append(axisRows(axis, null, item => openDetail(item.id)));
     const basis = axisBasis(axis); if (basis) flow.append(basis);
     box.append(flow);
+    // 이어 읽을 축(2026-10-24): 이 축과 사건을 두 건 이상 함께 가진 다른 축. 영역이 다른 축을 앞에 둡니다.
+    const ownEvents = new Set(axis.members.map(member => member.event));
+    const related = axisList.filter(other => other.id !== axis.id).map(other => ({ other, shared: other.members.filter(member => ownEvents.has(member.event)).length }))
+      .filter(item => item.shared >= 2).sort((a, b) => (a.other.area === axis.area) - (b.other.area === axis.area) || b.shared - a.shared).slice(0, 6);
+    if (related.length) {
+      const next = el('section', 'tv-axesv-related'); next.append(el('h3', '', '이어 읽을 축'), el('p', 'tv-note', '이 축과 사건을 함께 가진 축이에요. 같은 사건을 다른 이유로 다시 읽을 수 있어요.'));
+      const list = el('div', 'tv-axesv-related-list');
+      for (const { other, shared } of related) {
+        const go = button('', () => selectAxis(other.id, false), 'tv-axesv-item');
+        go.dataset.area = other.area;
+        const body = el('span', 'tv-axesv-item-body');
+        body.append(el('span', 'tv-axesv-item-title', other.title), el('span', 'tv-axesv-item-meta', [areaMap.get(other.area)?.name, '함께 가진 사건 ' + shared + '건'].filter(Boolean).join(' · ')));
+        go.append(areaDot(), body); list.append(go);
+      }
+      next.append(list); box.append(next);
+    }
   }
   // 고른 축이 목록 칸 안에서 보이도록 목록만 스크롤합니다(화면 전체는 움직이지 않음).
   function keepInList(node) {
@@ -1005,6 +1029,39 @@ body.tv-detail-open { overflow:hidden; }
     const card = Array.from(root.querySelectorAll('.tv-card')).find(node => node.dataset.eventId === event.id);
     if (card) { card.scrollIntoView({ block: 'center' }); card.focus({ preventScroll: true }); }
   }
+  // 오늘 같은 날(2026-10-24): 하루 한 사건이 가리키는 날과 월일이 같은 사건을 해마다 모읍니다.
+  // 양력 일 단위 날짜만 씁니다(음력, 1896년 이전 한국의 역법 미확인 날짜는 양력 월일과 맞지 않아 뺌). 없으면 앞뒤 사흘 안의 가까운 날.
+  function sameDayEvents(offset) {
+    const day = new Date(Date.now() + kst + offset * oneDay);
+    const pad = n => String(n).padStart(2, '0');
+    const keyOf = d => pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
+    const solarDay = e => e.date.precision === 'day' && /^-?\d+-\d\d-\d\d$/.test(e.date.start)
+      && (e.date.calendar === 'solar' || (e.date.calendar === 'unknown' && (e.region !== 'korea' || model.year(e) >= 1896)));
+    for (const shift of [0, 1, -1, 2, -2, 3, -3]) {
+      const target = new Date(day.getTime() + shift * oneDay), key = keyOf(target);
+      const list = events.filter(e => solarDay(e) && e.date.start.slice(-5) === key);
+      if (list.length) return { month: target.getUTCMonth() + 1, date: target.getUTCDate(), near: shift !== 0, list };
+    }
+    return { month: day.getUTCMonth() + 1, date: day.getUTCDate(), near: false, list: [] };
+  }
+  function sameDaySection(offset) {
+    const found = sameDayEvents(offset);
+    const s = el('section', 'tv-sameday');
+    s.append(el('h3', '', found.month + '월 ' + found.date + '일, 다른 해의 같은 날'));
+    s.append(el('p', 'tv-note', found.near ? '그날에 일어난 사건이 없어 가장 가까운 날을 보여 드려요.' : '해마다 같은 날 일어난 일이에요. 서로 이어졌다는 뜻은 아니에요.'));
+    const list = el('div', 'tv-nearby-list tv-sameday-list');
+    for (const event of found.list) {
+      const area = areaMap.get(model.primary(event));
+      const row = button('', () => openDetail(event.id), 'tv-neighbor');
+      row.dataset.eventId = event.id; row.dataset.area = model.primary(event);
+      row.setAttribute('aria-label', area.name + ' · ' + yearText(event) + ' ' + event.title + ', 상세 보기');
+      row.append(areaDot(), el('span', 'tv-neighbor-area', area.name), el('span', 'tv-neighbor-year', yearText(event)), el('span', 'tv-neighbor-title', event.title));
+      list.append(row);
+    }
+    if (!found.list.length) list.append(el('p', 'tv-note', '이 무렵 날짜가 알려진 사건을 아직 모으지 못했어요.'));
+    s.append(list);
+    return s;
+  }
   function renderDaily() {
     const box = $('tv-daily'); box.replaceChildren();
     const event = dailyEvent(state.dayOffset);
@@ -1027,7 +1084,7 @@ body.tv-detail-open { overflow:hidden; }
     const actions = el('div', 'tv-daily-actions');
     actions.append(button('이 시기를 표에서 보기', () => showInTable(event), 'tv-daily-go'));
     side.append(actions);
-    layout.append(main, side); box.append(layout);
+    layout.append(main, side); box.append(layout, sameDaySection(state.dayOffset));
   }
   function setView(view) {
     state.view = view;
@@ -1178,7 +1235,7 @@ body.tv-detail-open { overflow:hidden; }
   const tourChoices = [['auto', '기기에 맞추기', '기기의 밝기 설정을 따라요'], ['light', '밝게', '흰 바탕에 가는 선'], ['dark', '어둡게', '어두운 바탕, 밤에 보기 좋아요'], ['cute', '귀엽게', '둥근 카드와 고운 색']];
   const tourSteps = [
     { title: '사건의 지평선에 오신 것을 환영해요', text: '같은 때 서로 다른 세계에서 일어난 일을 나란히 보는 연표예요. 주요 기능을 짧게 보여 드릴게요.' },
-    { target: () => root.querySelector('[data-set-view="daily"]'), title: '하루 한 사건', text: '날마다 한 건씩 바뀌는 추천 사건을 크게 보여 줘요. 이전 추천과 다음 추천도 넘겨 볼 수 있어요.' },
+    { target: () => root.querySelector('[data-set-view="daily"]'), title: '하루 한 사건', text: '날마다 한 건씩 바뀌는 추천 사건을 크게 보여 줘요. 아래에는 해마다 같은 날 일어난 일도 모았어요. 이전 추천과 다음 추천으로 날을 넘겨 볼 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="table"]'), title: '나란히 보기', text: '같은 시간대의 사건을 영역별로 한 줄에 놓아요. 지역, 세부 영역, 낱말로 거를 수 있어요.' },
     { target: () => root.querySelector('[data-set-view="axes"]'), title: '축으로 보기', text: '한 가지 이유로 묶은 사건들을 축이라고 불러요. 축을 고르면 왜 묶었는지와 사건의 흐름을 시간 순서로 따라 읽을 수 있어요.' },
     { target: () => root.querySelector('.tv-3d-link'), title: '3D로 보기', text: '한 가지 이유로 묶은 축과 사건을 그물처럼 펼쳐 마우스로 돌려 볼 수 있어요. 높이가 시간이에요.' },
